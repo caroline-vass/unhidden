@@ -3,399 +3,944 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Hidden Cost of Being a Woman</title>
+<title>Eqly Index: The Lifetime Cost of Being a Woman in Europe</title>
+<meta name="description" content="A free, citation-backed lifetime calculator anchored on the EU Pay Transparency Directive (2023/970) and Eurostat's official gender pay gap data.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --pink: #D4537E;
-    --pink-light: #FBEAF0;
-    --pink-mid: #ED93B1;
-    --purple: #534AB7;
-    --purple-light: #EEEDFE;
-    --teal: #1D9E75;
-    --teal-light: #E1F5EE;
-    --amber: #BA7517;
-    --amber-light: #FAEEDA;
-    --coral: #D85A30;
-    --coral-light: #FAECE7;
-    --gray: #5F5E5A;
-    --gray-light: #F1EFE8;
-    --text: #2C2C2A;
-    --text-muted: #5F5E5A;
-    --border: rgba(0,0,0,0.12);
-    --bg: #fff;
-    --surface: #F8F7F4;
+    --ink: #3A1A08;
+    --paper: #F5EDE0;
+    --paper-warm: #EDD8BC;
+    --paper-soft: #F9F2E5;
+    --rose: #C4704A;
+    --rose-deep: #7A3018;
+    --rose-soft: #E8A070;
+    --rose-pale: #F5DCC8;
+    --sage: #6B8B30;
+    --sage-soft: #DCE5C4;
+    --gold: #E8A020;
+    --gold-soft: #F5DFA8;
+    --rule: rgba(58, 26, 8, 0.18);
+    --rule-strong: rgba(58, 26, 8, 0.4);
+    --shadow: 0 1px 3px rgba(58, 26, 8, 0.06);
   }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --text: #F1EFE8;
-      --text-muted: #B4B2A9;
-      --border: rgba(255,255,255,0.12);
-      --bg: #1a1a18;
-      --surface: #242420;
-      --pink-light: #3a1a28;
-      --purple-light: #1e1c3a;
-      --teal-light: #0a2820;
-      --amber-light: #2a1e06;
-      --coral-light: #2a1208;
-      --gray-light: #242420;
-    }
-  }
+
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); font-size: 16px; line-height: 1.6; }
 
-  .hero { padding: 3rem 2rem 2rem; text-align: center; border-bottom: 0.5px solid var(--border); }
-  .hero h1 { font-size: 2rem; font-weight: 500; margin-bottom: 0.5rem; }
-  .hero p { color: var(--text-muted); max-width: 560px; margin: 0 auto; font-size: 0.95rem; }
+  html, body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-feature-settings: "ss01", "ss02";
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
 
-  .sticky-total { position: sticky; top: 0; z-index: 100; background: var(--bg); border-bottom: 0.5px solid var(--border); padding: 0.75rem 2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
-  .sticky-total .label { font-size: 0.85rem; color: var(--text-muted); }
-  .sticky-total .amount { font-size: 1.5rem; font-weight: 500; color: var(--pink); }
-  .sticky-total .note { font-size: 0.75rem; color: var(--text-muted); text-align: right; max-width: 220px; }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 15% 20%, rgba(196, 112, 74, 0.05) 0%, transparent 45%),
+      radial-gradient(circle at 85% 75%, rgba(107, 139, 48, 0.04) 0%, transparent 45%);
+    pointer-events: none;
+    z-index: 0;
+  }
 
-  .settings { padding: 1.5rem 2rem; background: var(--surface); border-bottom: 0.5px solid var(--border); display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: flex-end; }
-  .settings label { font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 4px; }
-  .settings select, .settings input[type=number] { background: var(--bg); border: 0.5px solid var(--border); border-radius: 8px; padding: 6px 10px; font-size: 0.9rem; color: var(--text); cursor: pointer; }
-  .settings .setting-group { display: flex; flex-direction: column; }
+  .mono {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
 
-  .sections { max-width: 860px; margin: 0 auto; padding: 2rem; display: flex; flex-direction: column; gap: 2rem; }
+  /* ===== MASTHEAD ===== */
+  .masthead {
+    position: relative;
+    z-index: 2;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 36px 48px 0;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    border-bottom: 1.5px solid var(--ink);
+    padding-bottom: 18px;
+  }
+  .masthead .left, .masthead .right {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .masthead .right { text-align: right; }
+  .masthead .brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: 26px;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  .masthead .brand span { color: var(--rose); }
 
-  .section { border: 0.5px solid var(--border); border-radius: 12px; overflow: hidden; }
-  .section-header { padding: 1rem 1.25rem; display: flex; align-items: center; gap: 0.75rem; cursor: pointer; user-select: none; }
-  .section-header .icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
-  .section-header .title-group { flex: 1; }
-  .section-header h2 { font-size: 1rem; font-weight: 500; }
-  .section-header .section-cost { font-size: 1rem; font-weight: 500; }
-  .section-header .chevron { font-size: 12px; color: var(--text-muted); transition: transform 0.2s; }
-  .section-header.open .chevron { transform: rotate(180deg); }
+  /* ===== HERO ===== */
+  .hero {
+    position: relative;
+    z-index: 2;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 64px 48px 48px;
+  }
+  .hero .kicker {
+    color: var(--rose);
+    margin-bottom: 18px;
+  }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: clamp(44px, 6.5vw, 88px);
+    line-height: 0.97;
+    letter-spacing: -0.025em;
+    margin-bottom: 24px;
+    max-width: 940px;
+  }
+  .hero h1 em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--rose-deep);
+  }
+  .hero .lede {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 21px;
+    line-height: 1.5;
+    color: var(--ink);
+    max-width: 640px;
+    margin-bottom: 8px;
+  }
+  .hero .lede-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    color: var(--sage);
+    max-width: 640px;
+    margin-top: 14px;
+    line-height: 1.6;
+  }
 
-  .section-body { padding: 0 1.25rem 1.25rem; display: none; border-top: 0.5px solid var(--border); padding-top: 1rem; }
-  .section-body.open { display: block; }
+  /* ===== STICKY TOTAL ===== */
+  .sticky-bar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--paper);
+    border-top: 1.5px solid var(--ink);
+    border-bottom: 1.5px solid var(--ink);
+    padding: 14px 0;
+    margin-top: 24px;
+    box-shadow: 0 2px 0 rgba(58, 26, 8, 0.05);
+  }
+  .sticky-inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 48px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .sticky-label {
+    color: var(--rose);
+  }
+  .sticky-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(32px, 4vw, 52px);
+    color: var(--rose-deep);
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .sticky-meta {
+    color: var(--sage);
+    text-align: right;
+  }
 
-  .cost-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; padding: 0.6rem 0; border-bottom: 0.5px solid var(--border); }
-  .cost-row:last-child { border-bottom: none; }
-  .cost-row .row-left { flex: 1; }
-  .cost-row .row-left .row-name { font-size: 0.9rem; font-weight: 500; }
-  .cost-row .row-left .row-desc { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; line-height: 1.4; }
-  .cost-row .row-right { text-align: right; flex-shrink: 0; }
-  .cost-row .row-amount { font-size: 0.95rem; font-weight: 500; }
-  .cost-row .row-toggle { display: flex; align-items: center; gap: 6px; margin-top: 4px; justify-content: flex-end; }
-  .cost-row input[type=checkbox] { cursor: pointer; accent-color: var(--pink); }
-  .cost-row .toggle-label { font-size: 0.75rem; color: var(--text-muted); }
+  /* ===== INPUT PANEL ===== */
+  .controls {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 32px 48px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 24px;
+    background: var(--paper-warm);
+    border-bottom: 1px solid var(--rule-strong);
+  }
+  .control label {
+    display: block;
+    color: var(--sage);
+    margin-bottom: 8px;
+  }
+  .control input[type="number"],
+  .control select {
+    width: 100%;
+    background: var(--paper-soft);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 12px 14px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    color: var(--ink);
+    transition: border-color 0.2s;
+  }
+  .control input:focus,
+  .control select:focus {
+    outline: none;
+    border-color: var(--rose);
+  }
+  .control .hint {
+    margin-top: 6px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    color: var(--sage);
+    font-style: italic;
+  }
 
-  .invisible-note { font-size: 0.78rem; color: var(--text-muted); font-style: italic; margin-top: 0.5rem; padding: 0.5rem 0.75rem; border-left: 2px solid var(--border); }
+  /* ===== MAIN ===== */
+  main {
+    position: relative;
+    z-index: 1;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 48px;
+  }
 
-  .section.pink .section-header { background: var(--pink-light); }
-  .section.pink .section-cost { color: var(--pink); }
-  .section.pink .icon { background: var(--pink); color: #fff; }
-  .section.purple .section-header { background: var(--purple-light); }
-  .section.purple .section-cost { color: var(--purple); }
-  .section.purple .icon { background: var(--purple); color: #fff; }
-  .section.teal .section-header { background: var(--teal-light); }
-  .section.teal .section-cost { color: var(--teal); }
-  .section.teal .icon { background: var(--teal); color: #fff; }
-  .section.amber .section-header { background: var(--amber-light); }
-  .section.amber .section-cost { color: var(--amber); }
-  .section.amber .icon { background: var(--amber); color: #fff; }
-  .section.coral .section-header { background: var(--coral-light); }
-  .section.coral .section-cost { color: var(--coral); }
-  .section.coral .icon { background: var(--coral); color: #fff; }
-  .section.gray .section-header { background: var(--gray-light); }
-  .section.gray .section-cost { color: var(--gray); }
-  .section.gray .icon { background: var(--gray); color: #fff; }
+  /* ===== SECTION ===== */
+  .section {
+    margin-bottom: 56px;
+  }
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    border-bottom: 1.5px solid var(--ink);
+    padding-bottom: 14px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .section-head-left {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+  }
+  .section-head .num {
+    color: var(--rose);
+  }
+  .section-head h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: 28px;
+    letter-spacing: -0.01em;
+  }
+  .section-total {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 24px;
+    color: var(--rose-deep);
+  }
+  .section-intro {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    color: var(--ink);
+    max-width: 720px;
+    margin-bottom: 24px;
+    line-height: 1.65;
+  }
 
-  .chart-wrap { margin-top: 2rem; }
-  .chart-bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
-  .chart-bar-label { font-size: 0.78rem; color: var(--text-muted); width: 140px; flex-shrink: 0; text-align: right; }
-  .chart-bar-track { flex: 1; background: var(--surface); border-radius: 4px; height: 20px; overflow: hidden; }
-  .chart-bar-fill { height: 100%; border-radius: 4px; transition: width 0.5s ease; }
-  .chart-bar-value { font-size: 0.78rem; font-weight: 500; width: 70px; flex-shrink: 0; }
+  /* ===== ITEM CARD ===== */
+  .items {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 16px;
+  }
+  .item {
+    background: var(--paper-soft);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 20px 22px;
+    transition: border-color 0.2s, background 0.2s;
+    position: relative;
+  }
+  .item.on {
+    border-color: var(--rose);
+    background: var(--paper-soft);
+  }
+  .item.invisible {
+    background: var(--gold-soft);
+    border-color: rgba(232, 160, 32, 0.35);
+  }
+  .item-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  .item-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 1.3;
+    flex: 1;
+  }
+  .item-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 19px;
+    color: var(--rose-deep);
+    white-space: nowrap;
+  }
+  .item.invisible .item-value {
+    color: var(--gold);
+    font-size: 13px;
+    font-style: italic;
+    font-weight: 400;
+    align-self: center;
+  }
+  .item-desc {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    color: var(--ink);
+    line-height: 1.5;
+    margin-bottom: 12px;
+  }
+  .item-cite {
+    margin-bottom: 12px;
+    color: var(--sage);
+    font-size: 9.5px;
+    letter-spacing: 0.06em;
+  }
+  .item-cite a { color: var(--sage); text-decoration: underline; text-decoration-color: rgba(107,139,48,0.3); }
+  .item-cite a:hover { text-decoration-color: var(--sage); }
+  .item-action {
+    background: var(--paper-warm);
+    border-left: 2px solid var(--rose);
+    padding: 10px 14px;
+    margin-bottom: 12px;
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+  .item-action strong {
+    display: block;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 9.5px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--rose-deep);
+    margin-bottom: 4px;
+  }
+  .item-range {
+    font-size: 11.5px;
+    color: var(--sage);
+    margin-bottom: 10px;
+    font-style: italic;
+  }
+  .toggle-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .toggle-row input { display: none; }
+  .toggle {
+    width: 36px;
+    height: 20px;
+    background: var(--rule);
+    border-radius: 12px;
+    position: relative;
+    transition: background 0.2s;
+    flex-shrink: 0;
+  }
+  .toggle::after {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 16px;
+    height: 16px;
+    background: var(--paper-soft);
+    border-radius: 50%;
+    transition: transform 0.2s;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+  }
+  .toggle-row input:checked + .toggle { background: var(--rose); }
+  .toggle-row input:checked + .toggle::after { transform: translateX(16px); }
+  .toggle-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    color: var(--ink);
+  }
 
-  .summary-box { background: var(--surface); border-radius: 12px; padding: 1.5rem; margin-top: 2rem; }
-  .summary-box h3 { font-size: 1rem; font-weight: 500; margin-bottom: 1rem; }
-  .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
-  .summary-card { background: var(--bg); border: 0.5px solid var(--border); border-radius: 8px; padding: 0.75rem 1rem; }
-  .summary-card .sc-label { font-size: 0.75rem; color: var(--text-muted); }
-  .summary-card .sc-value { font-size: 1.25rem; font-weight: 500; margin-top: 2px; }
+  /* ===== EDITORIAL ESSAY ===== */
+  .essay {
+    background: var(--paper-warm);
+    border-left: 4px solid var(--rose);
+    padding: 36px 44px;
+    margin: 24px 0 32px;
+    border-radius: 2px;
+  }
+  .essay h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-style: italic;
+    font-size: 26px;
+    margin-bottom: 18px;
+    line-height: 1.2;
+    color: var(--rose-deep);
+  }
+  .essay p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    line-height: 1.7;
+    margin-bottom: 14px;
+    max-width: 680px;
+  }
+  .essay p:last-child { margin-bottom: 0; }
+  .essay .pattern {
+    font-style: italic;
+    color: var(--rose-deep);
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(196, 112, 74, 0.25);
+    font-size: 17px;
+  }
 
-  footer { text-align: center; padding: 2rem; color: var(--text-muted); font-size: 0.8rem; border-top: 0.5px solid var(--border); margin-top: 2rem; }
-  footer a { color: var(--text-muted); }
+  /* ===== SUMMARY ===== */
+  .summary {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 48px;
+    margin: 64px -48px;
+    border-radius: 0;
+    position: relative;
+  }
+  .summary::before {
+    content: "✦";
+    position: absolute;
+    top: 18px;
+    right: 24px;
+    color: var(--gold);
+    font-size: 22px;
+  }
+  .summary .label {
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+  .summary h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-style: italic;
+    font-size: clamp(32px, 4vw, 48px);
+    line-height: 1.1;
+    margin-bottom: 24px;
+    color: var(--paper);
+    letter-spacing: -0.015em;
+  }
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 28px;
+    margin-top: 36px;
+  }
+  .summary-card .sc-label {
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+  .summary-card .sc-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 32px;
+    color: var(--paper);
+    line-height: 1.1;
+  }
+  .summary-card .sc-note {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    color: var(--paper-warm);
+    margin-top: 6px;
+    font-style: italic;
+    opacity: 0.8;
+  }
+
+  /* ===== EMAIL CAPTURE ===== */
+  .signup {
+    background: var(--paper-warm);
+    border: 1.5px solid var(--ink);
+    padding: 36px 40px;
+    margin: 48px 0;
+    border-radius: 4px;
+    text-align: center;
+  }
+  .signup h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+  .signup p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    color: var(--sage);
+    max-width: 480px;
+    margin: 0 auto 20px;
+    line-height: 1.5;
+  }
+  .signup-form {
+    display: flex;
+    gap: 8px;
+    max-width: 460px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+  }
+  .signup-form input {
+    flex: 1;
+    min-width: 200px;
+    padding: 12px 16px;
+    border: 1px solid var(--rule-strong);
+    border-radius: 4px;
+    background: var(--paper-soft);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+  }
+  .signup-form input:focus {
+    outline: none;
+    border-color: var(--rose);
+  }
+  .signup-form button {
+    padding: 12px 24px;
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    border-radius: 4px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .signup-form button:hover {
+    background: var(--rose-deep);
+  }
+  .signup-form .privacy {
+    flex-basis: 100%;
+    margin-top: 10px;
+    color: var(--sage);
+    font-size: 11px;
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    border-top: 1.5px solid var(--ink);
+    padding: 32px 48px;
+    max-width: 1180px;
+    margin: 0 auto;
+    margin-top: 64px;
+  }
+  .colophon {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 24px;
+    align-items: center;
+    color: var(--sage);
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+  .colophon .center {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 14px;
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--ink);
+  }
+  .colophon .right { text-align: right; }
+  .sources {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--sage);
+    max-width: 920px;
+  }
+  .sources strong { color: var(--ink); font-weight: 500; }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 800px) {
+    .masthead { padding: 24px 24px 14px; grid-template-columns: 1fr; gap: 6px; text-align: center; }
+    .masthead .left, .masthead .right { text-align: center; }
+    .hero { padding: 40px 24px 32px; }
+    .hero h1 { font-size: 40px; }
+    .controls, main, footer { padding-left: 24px; padding-right: 24px; }
+    .summary { padding: 32px 24px; margin: 48px -24px; }
+    .essay { padding: 24px 24px; margin-left: -8px; margin-right: -8px; }
+    .colophon { grid-template-columns: 1fr; text-align: center; }
+    .colophon .right { text-align: center; }
+    .sticky-inner { padding: 0 24px; }
+  }
+
+  .section { scroll-margin-top: 100px; }
 </style>
 </head>
 <body>
 
-<div class="hero">
-  <h1>The Hidden Cost of Being a Woman</h1>
-  <p>A lifetime of invisible expenses — financial, physical, and professional — that rarely appear in any budget.</p>
+<!-- ===== MASTHEAD ===== -->
+<header class="masthead">
+  <div class="left mono">eqly.eu · the index</div>
+  <div class="brand">Eqly</div>
+  <div class="right mono">v 0.1 · Europe</div>
+</header>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="kicker mono">The lifetime cost of being a woman in Europe</div>
+  <h1>The EU says pay should be <em>equal</em>. As of last month, it has to prove it.</h1>
+  <p class="lede">A free, citation-backed calculator. The transposition deadline for the EU Pay Transparency Directive was 7 June 2026: this calculator is anchored entirely on that one law, not on 27 different national systems.</p>
+  <p class="lede-sub">Every figure links to its source: Eurostat, the Directive itself (2023/970), the European Commission. Nothing is stored. Nothing is sent. The numbers stay on your device.</p>
+</section>
+
+<!-- ===== STICKY TOTAL ===== -->
+<div class="sticky-bar">
+  <div class="sticky-inner">
+    <div>
+      <div class="sticky-label mono">Your estimated lifetime cost</div>
+      <div class="sticky-value" id="grand-total">€0</div>
+    </div>
+    <div class="sticky-meta mono" id="sticky-context">over a 40-year career</div>
+  </div>
 </div>
 
-<div class="sticky-total">
-  <div>
-    <div class="label">Estimated lifetime hidden cost</div>
-    <div class="amount" id="grand-total">£0</div>
+<!-- ===== CONTROLS ===== -->
+<div class="controls">
+  <div class="control">
+    <label class="mono">Your monthly salary (EUR)</label>
+    <input type="number" id="salary" value="2800" min="1000" max="15000" step="100">
+    <div class="hint">EU median gross monthly earnings are roughly €2,800</div>
   </div>
-  <div class="note">Figures are estimates based on UK averages. Toggle items that apply to you.</div>
-</div>
-
-<div class="settings">
-  <div class="setting-group">
-    <label for="country">Country</label>
-    <select id="country">
-      <option value="GBP">🇬🇧 United Kingdom</option>
-      <option value="USD">🇺🇸 United States</option>
-      <option value="EUR">🇪🇺 Europe (EUR)</option>
-    </select>
-  </div>
-  <div class="setting-group">
-    <label for="salary">Annual salary (gross)</label>
-    <input type="number" id="salary" value="35000" min="10000" max="200000" step="1000">
-  </div>
-  <div class="setting-group">
-    <label for="work-years">Years in workforce</label>
+  <div class="control">
+    <label class="mono">Years in the workforce</label>
     <input type="number" id="work-years" value="40" min="10" max="50" step="1">
+    <div class="hint">Typically 25 to 65</div>
   </div>
 </div>
 
-<div class="sections" id="sections-container"></div>
+<!-- ===== MAIN ===== -->
+<main>
 
-<div style="max-width:860px;margin:0 auto;padding: 0 2rem 2rem;">
-  <div class="chart-wrap" id="chart-wrap"></div>
-  <div class="summary-box">
-    <h3>What this cost could have been instead</h3>
+  <!-- ===== INTRO ESSAY ===== -->
+  <div class="essay">
+    <h3>The law is finally EU-wide. That doesn't mean it's enforced EU-wide yet.</h3>
+    <p>Women in the EU earn 11.1% less per hour than men, unadjusted, ranging from -0.8% in Luxembourg to 18.8% in Estonia. This has barely moved in a decade.</p>
+    <p>The Pay Transparency Directive (EU) 2023/970 was supposed to change that. It gives job applicants the right to know a salary range before interview, bans employers from asking your salary history, and gives every worker the right to request average pay by gender for equivalent work. Member states had until 7 June 2026, last month, to write this into national law. Where they haven't, the clearest parts of the Directive still apply directly, under long-standing EU court precedent.</p>
+    <p>But the reporting duty that actually forces companies to check their own numbers is staggered by size. Employers with 250 or more staff report from 2027. Companies with 150 to 249 staff report every three years, also from 2027. Companies with 100 to 149 staff don't have to report until 2031. Under 100 staff, never mandatory. Most working women in Europe are employed somewhere in that gap.</p>
+    <p class="pattern">This calculator counts both. The pay gap the Directive is designed to close. And the years-long reporting gap that means most employers won't be checked for a long time yet.</p>
+  </div>
+
+  <!-- Sections rendered dynamically below -->
+  <div id="sections"></div>
+
+  <!-- ===== SUMMARY ===== -->
+  <div class="summary">
+    <div class="label mono">I enkla ord</div>
+    <h2 id="summary-headline">Din beräknade livstidskostnad.</h2>
+    <p style="font-family:'Cormorant Garamond',serif; font-size:17px; line-height:1.6; max-width:680px; color:var(--paper-warm); font-style:italic;">
+      Det här är vad den strukturella kostnaden för att vara kvinna i Sverige ser ut, summerad över de kategorier du bockat i.
+    </p>
     <div class="summary-grid" id="summary-grid"></div>
   </div>
-</div>
 
+  <!-- ===== EMAIL SIGNUP ===== -->
+  <div class="signup">
+    <h3>Be notified when the directory launches.</h3>
+    <p>Eqly is building a directory of European employers who actually close this gap. Add your email and we'll tell you when it's live.</p>
+    <form class="signup-form" id="signup-form" onsubmit="handleSignup(event)">
+      <input type="email" placeholder="you@example.com" required>
+      <button type="submit">Notify me</button>
+      <div class="privacy mono">Your email stays with us. Used only for Unhidden updates. Unsubscribe any time.</div>
+    </form>
+  </div>
+
+</main>
+
+<!-- ===== FOOTER ===== -->
 <footer>
-  Sources: Fawcett Society, Office for National Statistics, NICE guidelines, Endometriosis UK, TUC, IFS pension reports. <br>
-  This tool uses estimates — real costs vary by individual circumstance. Built to make the invisible visible.<br><br>
-  <a href="https://github.com/">View on GitHub</a>
+  <div class="colophon">
+    <div class="left mono"></div>
+    <div class="center">Eqly: the pay gap, made visible.</div>
+    <div class="right mono">eqly.eu · 2026</div>
+  </div>
+  <div class="sources">
+    <p style="margin-bottom:14px;"><strong>Statistical sources.</strong> Eurostat, Gender pay gap statistics (sdg_05_20, 2024 data). Eurostat, gender overall earnings gap (2018, last available). Eurostat, gender pension gap, ages 65+ (ilc_pnp13m, 2024 data). European Commission, gender pay gap situation report. Eurofound, European Working Conditions Survey. Bowles, Babcock &amp; Lai (2007) on negotiation penalties. Tara Mohr / Harvard Business Review on gendered office labour.</p>
+    <p style="margin-bottom:14px;"><strong>Legal references.</strong> Directive (EU) 2023/970 of the European Parliament and of the Council of 10 May 2023 (pay transparency and enforcement mechanisms), Articles 5, 7, 9, 10, and 18. Transposition deadline: 7 June 2026 (Article 34). Where not yet transposed, sufficiently clear and unconditional provisions may still apply directly under established Court of Justice of the EU case law.</p>
+    <p style="font-style:italic;">Figures are estimates. Actual costs vary by individual situation and member state. This calculator deliberately covers only what is uniform across the EU under the Directive, not country-specific benefit systems. It runs entirely in your browser. Nothing is stored or sent.</p>
+  </div>
 </footer>
 
 <script>
-const CURRENCIES = {
-  GBP: { symbol: '£', rate: 1 },
-  USD: { symbol: '$', rate: 1.27 },
-  EUR: { symbol: '€', rate: 1.17 }
+// ===== CONFIG =====
+let state = {
+  salary: 2800,
+  workYears: 40
 };
 
+// ===== FORMATTING =====
+function fmt(eur) {
+  return '€' + Math.round(eur).toLocaleString('en-IE');
+}
+
+// ===== DYNAMIC CALCULATIONS =====
+function dynamic(key) {
+  const monthlySalary = state.salary;
+  const annualSalary = monthlySalary * 12;
+  const years = state.workYears;
+
+  switch (key) {
+    case 'payGap':
+      // 11.1% EU average unadjusted gap (Eurostat, 2024), compounded modestly
+      // to reflect raises and bonuses calculated as a percentage of a lower base.
+      return annualSalary * 0.111 * years * 1.1;
+
+    case 'overallEarningsGap':
+      // Overall earnings gap (36.7%, Eurostat 2018) minus the hourly pay gap
+      // already counted above, so this is the incremental amount only:
+      // driven by reduced hours and lower employment rates, not double pay.
+      return annualSalary * (0.367 - 0.111) * years;
+
+    case 'pensionGap':
+      // Assumes a typical pension of ~55% of final salary, paid over an
+      // assumed 20 years of retirement, with the EU's verified 25% gender
+      // pension gap (Eurostat, ages 65+, 2024) applied on top.
+      return annualSalary * 0.55 * 20 * 0.25;
+
+    default: return 0;
+  }
+}
 const sections = [
   {
-    id: 'body',
-    label: 'Body & health',
-    color: 'pink',
-    icon: '♀',
+    id: 'pay',
+    label: 'Pay & the gap',
+    intro: "The gap is small per paycheck. Compounded across a career, through raises and bonuses calculated as a percentage of a lower base, it becomes enormous.",
     items: [
-      { id: 'period-products', name: 'Menstrual products', desc: 'Tampons, pads, cups, period underwear. ~£13/month for ~38 years.', base: 5928, enabled: true },
-      { id: 'pain-meds', name: 'Pain relief & hot water bottles', desc: 'OTC medication, heat patches, related products for period pain.', base: 1200, enabled: true },
-      { id: 'pmdd', name: 'PMDD management', desc: 'Therapy, supplements, medication for premenstrual dysphoric disorder (affects ~5–8% of women).', base: 8000, enabled: false },
-      { id: 'endo', name: 'Endometriosis costs', desc: 'Diagnosis delays average 8 years. Private consultations, ongoing treatment, time off work (affects 1 in 10).', base: 18000, enabled: false },
-      { id: 'migraine', name: 'Hormonal migraines', desc: 'Medication, lost work days, specialist visits for menstrual-related migraines.', base: 4500, enabled: false },
-      { id: 'fertility', name: 'Contraception (lifetime)', desc: 'Pills, coils, injections, implants — often not fully covered.', base: 3200, enabled: true },
-      { id: 'menopause', name: 'Menopause symptoms & treatment', desc: 'HRT, private consultations, supplements, lost productivity during perimenopause.', base: 6000, enabled: true },
+      { id: 'pay-gap', name: 'Lifetime pay gap', desc: 'The unadjusted gender pay gap across the EU was 11.1% in 2024, meaning women earn on average 11.1% less per hour than men. It ranges from -0.8% in Luxembourg to 18.8% in Estonia. This calculator uses the EU-wide average as a single reference point, not a claim about any specific member state.', range: 'Using the EU average understates this for most of Eastern and Central Europe, and overstates it for Luxembourg, Belgium, and Romania. If you know your own country\'s gap, that figure will be more accurate than this one.', cite: 'Eurostat, Gender pay gap in unadjusted form (sdg_05_20), 2024 data', dynamic: 'payGap', enabled: true },
+      { id: 'overall-earnings-gap', name: 'The overall earnings gap', desc: 'The hourly pay gap above only measures wages while working. Eurostat\'s broader "overall earnings gap" also factors in that women work fewer paid hours on average and are employed at lower rates, largely from part-time work and career breaks. That figure was 36.7% as of 2018 (the last year Eurostat published it), over three times the hourly gap. The amount here is only the additional gap beyond the hourly pay gap already counted above, so the two don\'t double-count each other.', cite: 'Eurostat, gender overall earnings gap, 2018 (last available)', dynamic: 'overallEarningsGap', enabled: true },
+      { id: 'negotiation-penalty', name: 'The penalty for asking', desc: 'Women who negotiate assertively are judged more harshly than men who do the same. Across a career, this suppresses starting salaries and raises. This is international behavioural research, not tied to any one country\'s law.', cite: 'Bowles, Babcock & Lai (2007); replicated multiple times since', base: 16000, enabled: true },
+      { id: 'glue-work', name: 'Invisible "glue work"', desc: 'Notetaking, mentoring, organising leaving parties, smoothing conflict. Disproportionately done by women. Rarely promoted for, often expected.', cite: 'Tara Mohr / Harvard Business Review research on gendered office labour', base: 0, enabled: true, invisible: true },
     ]
   },
   {
-    id: 'work',
-    label: 'Work & pay',
-    color: 'purple',
-    icon: '£',
+    id: 'transparency',
+    label: 'The transparency you\'re owed',
+    intro: "These two rights are self-executing. No lawyer, no court, no fee. Most people don't know they now have them.",
     items: [
-      { id: 'pay-gap', name: 'Lifetime pay gap', desc: 'Women earn ~84p for every £1 men earn in the UK. This compounds across a career.', dynamic: 'payGap', enabled: true },
-      { id: 'unpaid-labour', name: 'Unpaid office "glue work"', desc: 'Note-taking, mentoring juniors, organising socials, emotional support to colleagues — work that doesn\'t get promoted.', base: 12000, enabled: true },
-      { id: 'emotional-labour', name: 'Managing others\' comfort at work', desc: 'Softening feedback, de-escalating conflict, being "approachable". A tax on women\'s time and energy.', base: 0, enabled: true, invisible: true },
-      { id: 'school-glue', name: '"Social glue" conditioning from school', desc: 'Girls are socialised from childhood to smooth over conflict, include others, manage group dynamics — a lifetime unpaid skill.', base: 0, enabled: true, invisible: true },
+      { id: 'salary-range-right', name: 'The right to a salary range before interview', desc: 'Employers must state the initial pay level or range in the job advert, or provide it before the interview, based on objective and gender-neutral criteria. They are banned from asking your current or past salary. This applies to every employer, regardless of size, once transposed, and the clearest parts already apply directly under EU law even where a member state is late.', action: 'If a job listing has no range and no interview has happened yet, ask directly: "Could you share the salary range for this role before we go further?" If asked your current salary, you can say: "I\'d rather focus on the range for this position." Neither is confrontational. Both are now your legal right to ask.', cite: 'Directive (EU) 2023/970, Article 5(1)(a) and 5(2)', base: 0, enabled: true, invisible: true },
+      { id: 'pay-info-request', name: 'The right to ask what your peers earn', desc: 'Any worker can request, in writing, the average pay level broken down by gender for people doing the same work or work of equal value. The employer must answer. This is free, and does not require a workplace dispute to trigger it.', action: 'Send a short written request, email is enough, to HR or your manager: "Under the EU Pay Transparency Directive (2023/970), I\'m requesting the average pay level, broken down by gender, for workers doing the same work or work of equal value as mine." Keep a copy. You don\'t need a reason.', cite: 'Directive (EU) 2023/970, Article 7', base: 0, enabled: true, invisible: true },
     ]
   },
   {
-    id: 'family',
-    label: 'Motherhood & family',
-    color: 'teal',
-    icon: '◎',
+    id: 'reporting',
+    label: 'The reporting gap',
+    intro: "The right to ask exists now. The duty for your employer to check its own numbers without being asked does not, for most companies, for years yet.",
     items: [
-      { id: 'maternity-pay', name: 'Statutory maternity pay gap', desc: 'Difference between full salary and SMP (£184/week) over 39 weeks, per child.', dynamic: 'maternity', enabled: false },
-      { id: 'miscarriage', name: 'Miscarriage costs', desc: 'Private scans, time off, mental health support. ~25% of pregnancies end in miscarriage.', base: 2500, enabled: false },
-      { id: 'childcare', name: 'Career interruption (childcare gap)', desc: 'Years out or reduced hours to manage childcare — compounding effect on salary progression.', dynamic: 'childcareGap', enabled: false },
-      { id: 'fertility-tx', name: 'Fertility treatment', desc: 'IVF and related treatments not always covered by NHS. Average private cycle ~£5,000.', base: 10000, enabled: false },
+      { id: 'reporting-timeline', name: 'Who actually has to report, and when', desc: 'Employers with 250 or more workers report their gender pay gap annually, starting 2027. Employers with 150 to 249 workers report every three years, also starting 2027. Employers with 100 to 149 workers don\'t have to report until 2031. Under 100 workers, reporting is voluntary, permanently. Most working women in Europe are employed below the 250-worker threshold. There isn\'t yet a single public source to check whether your own employer falls into this gap. That\'s exactly the kind of lookup a directory of reported, verified employers is for. Sign up below to be told when that exists.', cite: 'Directive (EU) 2023/970, Articles 9 and 10', base: 0, enabled: true, invisible: true },
+      { id: 'joint-assessment-trigger', name: 'The 5% trigger', desc: 'When a company\'s own reporting shows an unexplained pay gap of 5% or more within a job category, and it cannot justify that gap with objective, gender-neutral criteria, it must carry out a joint pay assessment with worker representatives: a diagnosis, the causes, and a corrective plan. This only fires once a company is already required to report.', cite: 'Directive (EU) 2023/970, Article 10(1)', base: 0, enabled: true, invisible: true },
     ]
   },
   {
     id: 'pension',
-    label: 'Pension & retirement',
-    color: 'amber',
-    icon: '◇',
+    label: 'Pension & later life',
+    intro: "Every gap above compounds quietly into this one. It shows up decades after the pay gap does, which is exactly why it's easy to ignore until it's too late to fix.",
     items: [
-      { id: 'pension-gap', name: 'Pension gap (career breaks)', desc: 'Women retire with ~35–40% less pension than men, driven by maternity leave, part-time work, care gaps.', dynamic: 'pensionGap', enabled: true },
-      { id: 'caring-pension', name: 'Pension loss from caring duties', desc: 'Leaving work to care for elderly parents or family members. Women provide 60% of unpaid care.', base: 22000, enabled: false },
+      { id: 'pension-gap', name: 'The pension gap', desc: 'Women in the EU aged 65 and over receive pensions 25% lower than men\'s. This assumes a typical pension of roughly 55% of final salary, paid out over an assumed 20 years of retirement, with the 25% EU-wide gap applied on top. Actual pension systems vary significantly by member state; this is an EU-wide average, not a specific country\'s formula.', cite: 'Eurostat, gender pension gap, people aged 65+ (ilc_pnp13m), 2024 data', dynamic: 'pensionGap', enabled: true },
     ]
   },
   {
-    id: 'care',
-    label: 'Unpaid care & labour',
-    color: 'coral',
-    icon: '◉',
+    id: 'recourse',
+    label: "If it's not equal",
+    intro: "This category is not a cost to add up. It's what actually happens if a woman pursues this, and what the Directive changed about the odds.",
     items: [
-      { id: 'elder-care', name: 'Elderly parent care', desc: 'Women provide on average 60% of informal elder care — often reducing hours or leaving work.', base: 15000, enabled: false },
-      { id: 'domestic', name: 'Domestic labour gap (unpaid)', desc: 'Women do on average 16 more hours of unpaid housework and childcare per week than male partners.', base: 0, enabled: true, invisible: true },
-      { id: 'mental-load', name: 'The mental load', desc: 'Planning, remembering, managing family admin — invisible cognitive labour that doesn\'t stop.', base: 0, enabled: true, invisible: true },
+      { id: 'burden-of-proof', name: 'Reversed burden of proof, uncapped compensation', desc: 'If a worker brings a pay discrimination claim, it is the employer, not the worker, who must prove the pay difference was not based on sex. Compensation on a successful claim is full and uncapped: back pay, related bonuses, and compensation for lost opportunities. National penalties for non-compliant employers vary: reported figures include fines up to €500,000 in Germany, up to 1% of payroll in France, and up to €225,000 in Spain.', cite: 'Directive (EU) 2023/970, Article 18; national transposition measures', base: 0, enabled: true, invisible: true },
+      { id: 'intersectional-discrimination', name: 'This doesn\'t stop at gender alone', desc: 'The Directive is the first piece of EU legislation to define intersectional discrimination in binding law: discrimination based on a combination of sex and another protected ground, such as race, ethnicity, age, or disability. It specifically names women with disabilities, older women, and women from ethnic minorities as groups facing this compounded discrimination, and courts and penalty decisions can take that compounding into account. This calculator\'s EU-wide averages don\'t capture how much larger these gaps are for specific groups. That\'s a separate, more fragmented picture, and a real limitation of everything above.', cite: 'Directive (EU) 2023/970, Article 3(2)(e) and Recital 25', base: 0, enabled: true, invisible: true },
     ]
   },
   {
-    id: 'safety',
-    label: 'Safety & appearance',
-    color: 'gray',
-    icon: '◈',
+    id: 'invisible',
+    label: 'The weight that doesn\'t show up in any report',
+    intro: "These costs honestly can't be quantified, and this calculator doesn't pretend to. They're listed because ignoring them is the most expensive thing of all.",
     items: [
-      { id: 'pink-tax', name: 'Pink tax (gendered pricing)', desc: 'Women\'s products cost ~7% more than equivalent men\'s versions — razors, deodorant, clothing.', base: 3500, enabled: true },
-      { id: 'safety', name: 'Personal safety costs', desc: 'Taxis instead of walking at night, safety apps, self-defence classes, well-lit routes = extra cost.', base: 4000, enabled: true },
-      { id: 'appearance', name: 'Professional appearance premium', desc: 'Women face stronger expectation to wear makeup, styled hair, professional dress in workplace settings.', base: 9000, enabled: true },
+      { id: 'mental-load', name: 'The mental load', desc: 'Planning, remembering, anticipating, coordinating. The cognitive work of running a household and a family that continues regardless of whether you sleep.', base: 0, enabled: true, invisible: true },
+      { id: 'emotional-labour', name: 'Emotional labour', desc: 'Managing other people\'s feelings: at home, at work, in friendships. Softening, anticipating, comforting, mediating. Invisible by design.', base: 0, enabled: true, invisible: true },
+      { id: 'domestic-gap', name: 'The domestic work gap', desc: 'Across the EU, women still average significantly more hours of unpaid housework and care per week than men, even in dual full-time-earner households.', cite: 'Eurofound, European Working Conditions Survey', base: 0, enabled: true, invisible: true },
     ]
-  },
+  }
 ];
 
-let currency = 'GBP';
-let salary = 35000;
-let workYears = 40;
-let enabled = {};
-
+// ===== STATE =====
+const enabled = {};
 sections.forEach(s => s.items.forEach(i => { enabled[i.id] = i.enabled; }));
-
-function fmt(n) {
-  const { symbol, rate } = CURRENCIES[currency];
-  return symbol + Math.round(n * rate).toLocaleString();
-}
-
-function dynamic(key) {
-  const gap = 0.16;
-  switch(key) {
-    case 'payGap': return salary * gap * workYears * 0.6;
-    case 'maternity': return Math.max(0, (salary / 52) - 184) * 39;
-    case 'childcareGap': return salary * 0.25 * 5;
-    case 'pensionGap': return salary * 0.08 * workYears * 0.38;
-    default: return 0;
-  }
-}
 
 function itemValue(item) {
   if (!enabled[item.id]) return 0;
   if (item.invisible) return 0;
-  if (item.dynamic) return dynamic(item.dynamic);
-  return item.base || 0;
+  return item.dynamic ? dynamic(item.dynamic) : (item.base || 0);
 }
 
-function sectionTotal(section) {
-  return section.items.reduce((sum, i) => sum + itemValue(i), 0);
+function sectionTotal(s) {
+  return s.items.reduce((sum, i) => sum + itemValue(i), 0);
 }
 
 function grandTotal() {
   return sections.reduce((sum, s) => sum + sectionTotal(s), 0);
 }
 
+// ===== RENDER =====
 function buildSections() {
-  const container = document.getElementById('sections-container');
-  container.innerHTML = '';
-  sections.forEach(s => {
-    const sec = document.createElement('div');
-    sec.className = `section ${s.color}`;
-    sec.id = `sec-${s.id}`;
-
-    const header = document.createElement('div');
-    header.className = 'section-header';
-    header.innerHTML = `
-      <div class="icon">${s.icon}</div>
-      <div class="title-group"><h2>${s.label}</h2></div>
-      <div class="section-cost" id="cost-${s.id}">${fmt(sectionTotal(s))}</div>
-      <div class="chevron">▼</div>
-    `;
-    header.addEventListener('click', () => {
-      header.classList.toggle('open');
-      body.classList.toggle('open');
-    });
-
-    const body = document.createElement('div');
-    body.className = 'section-body';
-
-    s.items.forEach(item => {
-      const row = document.createElement('div');
-      row.className = 'cost-row';
-      const val = item.invisible ? null : itemValue(item);
-      row.innerHTML = `
-        <div class="row-left">
-          <div class="row-name">${item.name}</div>
-          <div class="row-desc">${item.desc}</div>
-          ${item.invisible ? `<p class="invisible-note">This cost is real but impossible to fully quantify in money — it's carried in time, energy and wellbeing.</p>` : ''}
+  const container = document.getElementById('sections');
+  container.innerHTML = sections.map((s, idx) => `
+    <section class="section" id="section-${s.id}">
+      <div class="section-head">
+        <div class="section-head-left">
+          <span class="num mono">§ 0${idx + 1}</span>
+          <h2>${s.label}</h2>
         </div>
-        <div class="row-right">
-          <div class="row-amount" id="val-${item.id}">${item.invisible ? '—' : fmt(val)}</div>
-          <div class="row-toggle">
-            <input type="checkbox" id="chk-${item.id}" ${enabled[item.id] ? 'checked' : ''}>
-            <label class="toggle-label" for="chk-${item.id}">applies to me</label>
-          </div>
-        </div>
-      `;
-      row.querySelector(`#chk-${item.id}`).addEventListener('change', e => {
-        enabled[item.id] = e.target.checked;
-        update();
-      });
-      body.appendChild(row);
-    });
+        <div class="section-total" id="total-${s.id}">€0</div>
+      </div>
+      <p class="section-intro">${s.intro}</p>
+      <div class="items">
+        ${s.items.map(i => renderItem(i)).join('')}
+      </div>
+    </section>
+  `).join('');
 
-    sec.appendChild(header);
-    sec.appendChild(body);
-    container.appendChild(sec);
-  });
+  sections.forEach(s => s.items.forEach(i => {
+    const cb = document.getElementById('cb-' + i.id);
+    if (cb) cb.addEventListener('change', e => {
+      enabled[i.id] = e.target.checked;
+      update();
+    });
+  }));
 }
 
-function buildChart() {
-  const wrap = document.getElementById('chart-wrap');
-  const colors = { pink: '#D4537E', purple: '#534AB7', teal: '#1D9E75', amber: '#BA7517', coral: '#D85A30', gray: '#5F5E5A' };
-  const totals = sections.map(s => ({ label: s.label, color: colors[s.color], val: sectionTotal(s) }));
-  const max = Math.max(...totals.map(t => t.val), 1);
-  wrap.innerHTML = `<div style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1rem;">Cost breakdown by category</div>` +
-    totals.map(t => `
-      <div class="chart-bar-row">
-        <div class="chart-bar-label">${t.label}</div>
-        <div class="chart-bar-track">
-          <div class="chart-bar-fill" style="width:${Math.round(t.val/max*100)}%;background:${t.color};"></div>
-        </div>
-        <div class="chart-bar-value">${fmt(t.val)}</div>
-      </div>`).join('');
+function renderItem(i) {
+  const isOn = enabled[i.id];
+  const valueDisplay = i.invisible ? 'real, not measurable' : '€0';
+  return `
+    <div class="item ${isOn ? 'on' : ''} ${i.invisible ? 'invisible' : ''}" id="item-${i.id}">
+      <div class="item-header">
+        <div class="item-name">${i.name}</div>
+        <div class="item-value" id="val-${i.id}">${valueDisplay}</div>
+      </div>
+      <div class="item-desc">${i.desc}</div>
+      ${i.range ? `<div class="item-range">${i.range}</div>` : ''}
+      ${i.cite ? `<div class="item-cite mono">Source: ${i.cite}</div>` : ''}
+      ${i.action ? `<div class="item-action"><strong>How to actually do this</strong>${i.action}</div>` : ''}
+      <label class="toggle-row">
+        <input type="checkbox" id="cb-${i.id}" ${isOn ? 'checked' : ''}>
+        <span class="toggle"></span>
+        <span class="toggle-label">${i.invisible ? 'Acknowledge this' : 'Applies to me'}</span>
+      </label>
+    </div>
+  `;
 }
 
 function buildSummary() {
   const total = grandTotal();
-  const { symbol, rate } = CURRENCIES[currency];
-  const grid = document.getElementById('summary-grid');
+  const annualSalary = state.salary * 12;
+  const years = state.workYears;
+  const ratio = total / annualSalary;
+  const monthsLost = total / state.salary;
+  const yearsOfWork = total / annualSalary;
+
+  const headline = total === 0
+    ? 'Tick the categories that apply to you.'
+    : `Roughly ${fmt(total)} over a 40-year career.`;
+  document.getElementById('summary-headline').textContent = headline;
+
   const items = [
-    { label: 'Years of a median salary', value: total > 0 ? (total / (salary * CURRENCIES[currency].rate)).toFixed(1) + ' years' : '—' },
-    { label: 'Monthly equivalent', value: fmt(total / (workYears * 12)) },
-    { label: 'Could fund a pension top-up of', value: fmt(total / workYears) + '/yr' },
-    { label: 'Or a home deposit in', value: total > 0 ? Math.ceil(40000 * rate / (total / (workYears * 12))) + ' months saving' : '—' },
+    { label: 'Total lifetime cost', value: fmt(total), note: 'across the categories you\'ve ticked' },
+    { label: 'Equivalent in years of salary', value: yearsOfWork.toFixed(1) + ' years', note: 'of your full annual income' },
+    { label: 'Monthly equivalent across your career', value: total > 0 ? fmt(total / (years * 12)) + '/mo' : '—', note: 'spread across your working life' },
+    { label: 'Could fund an annual pension top-up of', value: total > 0 ? fmt(total / years) + '/yr' : '—', note: 'if invested instead' },
   ];
-  grid.innerHTML = items.map(i => `
+
+  document.getElementById('summary-grid').innerHTML = items.map(i => `
     <div class="summary-card">
-      <div class="sc-label">${i.label}</div>
+      <div class="sc-label mono">${i.label}</div>
       <div class="sc-value">${i.value}</div>
-    </div>`).join('');
+      <div class="sc-note">${i.note}</div>
+    </div>
+  `).join('');
 }
 
 function update() {
   document.getElementById('grand-total').textContent = fmt(grandTotal());
+
   sections.forEach(s => {
-    const el = document.getElementById(`cost-${s.id}`);
-    if (el) el.textContent = fmt(sectionTotal(s));
+    const totalEl = document.getElementById('total-' + s.id);
+    if (totalEl) totalEl.textContent = fmt(sectionTotal(s));
+
     s.items.forEach(item => {
-      const el = document.getElementById(`val-${item.id}`);
-      if (el && !item.invisible) el.textContent = fmt(itemValue(item));
+      const valEl = document.getElementById('val-' + item.id);
+      const itemEl = document.getElementById('item-' + item.id);
+      if (!item.invisible && valEl) {
+        valEl.textContent = fmt(itemValue(item));
+      }
+      if (itemEl) {
+        itemEl.classList.toggle('on', enabled[item.id]);
+      }
     });
   });
-  buildChart();
+
   buildSummary();
 }
 
-document.getElementById('country').addEventListener('change', e => { currency = e.target.value; update(); });
-document.getElementById('salary').addEventListener('input', e => { salary = +e.target.value || 35000; update(); });
-document.getElementById('work-years').addEventListener('input', e => { workYears = +e.target.value || 40; update(); });
+// ===== INPUT WIRING =====
+document.getElementById('salary').addEventListener('input', e => {
+  state.salary = +e.target.value || 2800;
+  update();
+});
+document.getElementById('work-years').addEventListener('input', e => {
+  state.workYears = +e.target.value || 40;
+  update();
+});
 
+// ===== EMAIL SIGNUP =====
+function handleSignup(e) {
+  e.preventDefault();
+  const form = e.target;
+  const email = form.querySelector('input[type="email"]').value;
+  form.innerHTML = `
+    <div style="text-align:center; padding:8px 0;">
+      <div style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:18px; color:var(--rose-deep);">Thank you.</div>
+      <div style="font-family:'Cormorant Garamond',serif; font-size:14px; color:var(--sage); margin-top:6px;">
+        We'll be in touch when the directory launches. Until then: take care of yourself.
+      </div>
+    </div>
+  `;
+  console.log('[Eqly signup placeholder]', email);
+}
+
+// ===== INIT =====
 buildSections();
 update();
 </script>
