@@ -485,6 +485,113 @@
     opacity: 0.8;
   }
 
+  /* ===== ACTION PLAN ===== */
+  .action-plan {
+    background: var(--rose-deep);
+    color: var(--paper);
+    padding: 48px;
+    margin: 64px -48px;
+    position: relative;
+  }
+  .action-plan .label { color: var(--rose-soft); margin-bottom: 12px; }
+  .action-plan h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-style: italic;
+    font-size: clamp(28px, 3.6vw, 40px);
+    line-height: 1.15;
+    margin-bottom: 20px;
+    color: var(--paper);
+  }
+  .plan-item {
+    background: rgba(245, 237, 224, 0.08);
+    border-left: 3px solid var(--gold);
+    border-radius: 4px;
+    padding: 16px 20px;
+    margin-top: 14px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .plan-item .plan-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 26px;
+    color: var(--gold);
+    flex-shrink: 0;
+    line-height: 1;
+    min-width: 28px;
+  }
+  .plan-item .plan-body { flex: 1; }
+  .plan-item .plan-name {
+    font-weight: 500;
+    font-size: 14px;
+    margin-bottom: 4px;
+  }
+  .plan-item .plan-effort {
+    display: inline-block;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+  .plan-item .plan-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--paper-warm);
+  }
+  .plan-empty {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--paper-warm);
+    margin-top: 14px;
+    opacity: 0.8;
+  }
+  #collective-plan-list { margin-top: 28px; }
+  #collective-plan-list .plan-section-label {
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--rose-soft);
+    margin-bottom: 6px;
+  }
+  .plan-tools {
+    display: flex;
+    gap: 14px;
+    margin-top: 32px;
+    flex-wrap: wrap;
+  }
+  .plan-btn {
+    background: var(--gold);
+    color: var(--ink);
+    border: none;
+    padding: 12px 22px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .plan-btn-ghost {
+    background: transparent;
+    color: var(--paper);
+    border: 1px solid rgba(245,237,224,0.4);
+  }
+  @media (max-width: 640px) {
+    .action-plan { padding: 32px 24px; margin: 48px -24px; }
+  }
+  @media print {
+    .masthead, .hero, .sticky-bar, .controls, #sections, .signup, footer, .plan-tools { display: none !important; }
+    .summary, .action-plan { background: white !important; color: black !important; margin: 0 0 24px 0 !important; }
+    .summary h2, .action-plan h2 { color: black !important; }
+    .plan-item { background: #f2f2f2 !important; border-left-color: #999 !important; }
+    .plan-text, .summary-card .sc-note { color: #333 !important; }
+  }
+
   /* ===== EMAIL CAPTURE ===== */
   .signup {
     background: var(--paper-warm);
@@ -662,12 +769,27 @@
 
   <!-- ===== SUMMARY ===== -->
   <div class="summary">
-    <div class="label mono">I enkla ord</div>
-    <h2 id="summary-headline">Din beräknade livstidskostnad.</h2>
+    <div class="label mono">In plain terms</div>
+    <h2 id="summary-headline">Your estimated lifetime cost.</h2>
     <p style="font-family:'Cormorant Garamond',serif; font-size:17px; line-height:1.6; max-width:680px; color:var(--paper-warm); font-style:italic;">
-      Det här är vad den strukturella kostnaden för att vara kvinna i Sverige ser ut, summerad över de kategorier du bockat i.
+      This is what the structural cost of being a woman in the EU looks like, summed across the categories you've ticked.
     </p>
     <div class="summary-grid" id="summary-grid"></div>
+  </div>
+
+  <!-- ===== ACTION PLAN ===== -->
+  <div class="action-plan" id="action-plan-wrap">
+    <div class="label mono">Your action plan</div>
+    <h2>What you can actually do, in a reasonable order.</h2>
+    <p style="font-family:'Cormorant Garamond',serif; font-size:17px; line-height:1.6; max-width:680px; color:var(--paper-warm); font-style:italic;">
+      Based on what you've ticked. Sorted by how easy it is to start, not by how important it is.
+    </p>
+    <div id="action-plan-list"></div>
+    <div id="collective-plan-list"></div>
+    <div class="plan-tools">
+      <button type="button" id="btn-email-plan" class="plan-btn">Email this to yourself →</button>
+      <button type="button" id="btn-print-plan" class="plan-btn plan-btn-ghost">Print →</button>
+    </div>
   </div>
 
   <!-- ===== EMAIL SIGNUP ===== -->
@@ -753,8 +875,8 @@ const sections = [
     label: 'The transparency you\'re owed',
     intro: "These two rights are self-executing. No lawyer, no court, no fee. Most people don't know they now have them.",
     items: [
-      { id: 'salary-range-right', name: 'The right to a salary range before interview', desc: 'Employers must state the initial pay level or range in the job advert, or provide it before the interview, based on objective and gender-neutral criteria. They are banned from asking your current or past salary. This applies to every employer, regardless of size, once transposed, and the clearest parts already apply directly under EU law even where a member state is late.', action: 'If a job listing has no range and no interview has happened yet, ask directly: "Could you share the salary range for this role before we go further?" If asked your current salary, you can say: "I\'d rather focus on the range for this position." Neither is confrontational. Both are now your legal right to ask.', cite: 'Directive (EU) 2023/970, Article 5(1)(a) and 5(2)', base: 0, enabled: true, invisible: true },
-      { id: 'pay-info-request', name: 'The right to ask what your peers earn', desc: 'Any worker can request, in writing, the average pay level broken down by gender for people doing the same work or work of equal value. The employer must answer. This is free, and does not require a workplace dispute to trigger it.', action: 'Send a short written request, email is enough, to HR or your manager: "Under the EU Pay Transparency Directive (2023/970), I\'m requesting the average pay level, broken down by gender, for workers doing the same work or work of equal value as mine." Keep a copy. You don\'t need a reason.', cite: 'Directive (EU) 2023/970, Article 7', base: 0, enabled: true, invisible: true },
+      { id: 'salary-range-right', name: 'The right to a salary range before interview', desc: 'Employers must state the initial pay level or range in the job advert, or provide it before the interview, based on objective and gender-neutral criteria. They are banned from asking your current or past salary. This applies to every employer, regardless of size, once transposed, and the clearest parts already apply directly under EU law even where a member state is late.', action: 'If a job listing has no range and no interview has happened yet, ask directly: "Could you share the salary range for this role before we go further?" If asked your current salary, you can say: "I\'d rather focus on the range for this position." Neither is confrontational. Both are now your legal right to ask.', effort: 1, cite: 'Directive (EU) 2023/970, Article 5(1)(a) and 5(2)', base: 0, enabled: true, invisible: true },
+      { id: 'pay-info-request', name: 'The right to ask what your peers earn', desc: 'Any worker can request, in writing, the average pay level broken down by gender for people doing the same work or work of equal value. The employer must answer. This is free, and does not require a workplace dispute to trigger it.', action: 'Send a short written request, email is enough, to HR or your manager: "Under the EU Pay Transparency Directive (2023/970), I\'m requesting the average pay level, broken down by gender, for workers doing the same work or work of equal value as mine." Keep a copy. You don\'t need a reason.', effort: 1, cite: 'Directive (EU) 2023/970, Article 7', base: 0, enabled: true, invisible: true },
     ]
   },
   {
@@ -762,7 +884,7 @@ const sections = [
     label: 'The reporting gap',
     intro: "The right to ask exists now. The duty for your employer to check its own numbers without being asked does not, for most companies, for years yet.",
     items: [
-      { id: 'reporting-timeline', name: 'Who actually has to report, and when', desc: 'Employers with 250 or more workers report their gender pay gap annually, starting 2027. Employers with 150 to 249 workers report every three years, also starting 2027. Employers with 100 to 149 workers don\'t have to report until 2031. Under 100 workers, reporting is voluntary, permanently. Most working women in Europe are employed below the 250-worker threshold. There isn\'t yet a single public source to check whether your own employer falls into this gap. That\'s exactly the kind of lookup a directory of reported, verified employers is for. Sign up below to be told when that exists.', cite: 'Directive (EU) 2023/970, Articles 9 and 10', base: 0, enabled: true, invisible: true },
+      { id: 'reporting-timeline', name: 'Who actually has to report, and when', desc: 'Employers with 250 or more workers report their gender pay gap annually, starting 2027. Employers with 150 to 249 workers report every three years, also starting 2027. Employers with 100 to 149 workers don\'t have to report until 2031. Under 100 workers, reporting is voluntary, permanently. Most working women in Europe are employed below the 250-worker threshold. There isn\'t yet a single public source to check whether your own employer falls into this gap. That\'s exactly the kind of lookup a directory of reported, verified employers is for. Sign up below to be told when that exists.', collectiveAction: 'Ask your works council, union rep, or HR directly: "Which reporting tier are we in under the Pay Transparency Directive, and when is our first report due?" Most companies haven\'t worked this out yet. One person asking is easy to ignore. Several people asking the same week is not.', cite: 'Directive (EU) 2023/970, Articles 9 and 10', base: 0, enabled: true, invisible: true },
       { id: 'joint-assessment-trigger', name: 'The 5% trigger', desc: 'When a company\'s own reporting shows an unexplained pay gap of 5% or more within a job category, and it cannot justify that gap with objective, gender-neutral criteria, it must carry out a joint pay assessment with worker representatives: a diagnosis, the causes, and a corrective plan. This only fires once a company is already required to report.', cite: 'Directive (EU) 2023/970, Article 10(1)', base: 0, enabled: true, invisible: true },
     ]
   },
@@ -892,6 +1014,96 @@ function buildSummary() {
   `).join('');
 }
 
+// ===== ACTION PLAN =====
+const ALWAYS_ON_ACTION = {
+  name: 'Contribute your numbers, anonymously',
+  effort: 1,
+  effortLabel: '5 minutes, no risk',
+  text: 'Add your salary, role, and region to the shared, anonymous dataset. No one can trace it back to you. Every submission makes the next woman\'s comparison more accurate.'
+};
+
+const EFFORT_LABELS = { 1: '5 minutes, no risk', 2: 'a process, not confrontational', 3: 'means picking a fight' };
+
+function getPersonalActions() {
+  const actions = [];
+  sections.forEach(s => s.items.forEach(item => {
+    if (enabled[item.id] && item.action) {
+      actions.push({ name: item.name, effort: item.effort || 2, text: item.action });
+    }
+  }));
+  actions.sort((a, b) => a.effort - b.effort);
+  return [ALWAYS_ON_ACTION, ...actions];
+}
+
+function getCollectiveActions() {
+  const actions = [];
+  sections.forEach(s => s.items.forEach(item => {
+    if (enabled[item.id] && item.collectiveAction) {
+      actions.push({ name: item.name, text: item.collectiveAction });
+    }
+  }));
+  return actions;
+}
+
+function buildActionPlan() {
+  const personal = getPersonalActions();
+  const collective = getCollectiveActions();
+
+  document.getElementById('action-plan-list').innerHTML = personal.map((a, idx) => `
+    <div class="plan-item">
+      <div class="plan-num">${idx + 1}</div>
+      <div class="plan-body">
+        <div class="plan-name">${a.name}</div>
+        <div class="plan-effort mono">${a.effortLabel || EFFORT_LABELS[a.effort]}</div>
+        <div class="plan-text">${a.text}</div>
+      </div>
+    </div>
+  `).join('');
+
+  const collectiveWrap = document.getElementById('collective-plan-list');
+  if (collective.length === 0) {
+    collectiveWrap.innerHTML = '';
+  } else {
+    collectiveWrap.innerHTML = `
+      <div class="plan-section-label mono">Worth doing together, not alone</div>
+      ${collective.map(a => `
+        <div class="plan-item">
+          <div class="plan-num">✦</div>
+          <div class="plan-body">
+            <div class="plan-name">${a.name}</div>
+            <div class="plan-text">${a.text}</div>
+          </div>
+        </div>
+      `).join('')}
+    `;
+  }
+}
+
+function buildPlanEmailBody() {
+  const total = fmt(grandTotal());
+  const personal = getPersonalActions();
+  const collective = getCollectiveActions();
+  let body = `My estimated lifetime cost, per the Eqly Index: ${total}\n\n`;
+  body += `MY ACTION PLAN:\n`;
+  personal.forEach((a, idx) => { body += `\n${idx + 1}. ${a.name}\n${a.text}\n`; });
+  if (collective.length) {
+    body += `\nWORTH DOING TOGETHER:\n`;
+    collective.forEach(a => { body += `\n• ${a.name}\n${a.text}\n`; });
+  }
+  body += `\n\nCalculated at eqly.eu. None of this was stored or sent until you chose to email it to yourself.`;
+  return body;
+}
+
+document.getElementById('btn-email-plan').addEventListener('click', () => {
+  const subject = encodeURIComponent('My action plan from the Eqly Index');
+  const body = encodeURIComponent(buildPlanEmailBody());
+  window.location.href = `mailto:?subject=${subject}&body=${body}`;
+});
+
+document.getElementById('btn-print-plan').addEventListener('click', () => {
+  window.print();
+});
+
 function update() {
   document.getElementById('grand-total').textContent = fmt(grandTotal());
 
@@ -912,6 +1124,7 @@ function update() {
   });
 
   buildSummary();
+  buildActionPlan();
 }
 
 // ===== INPUT WIRING =====
