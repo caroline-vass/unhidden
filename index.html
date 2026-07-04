@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unhidden — The Index</title>
+<meta name="description" content="The lifetime structural cost of being a woman, made visible. Free, citation-backed calculator.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #3A1A08;
+    --paper: #F5EDE0;
+    --paper-warm: #EDD8BC;
+    --rose: #C4704A;
+    --rose-deep: #7A3018;
+    --gold: #E8A020;
+    --rule: rgba(58, 26, 8, 0.18);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    height: 100%;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+  }
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 40px 24px;
+    text-align: center;
+  }
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--rose);
+    margin-bottom: 18px;
+  }
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: clamp(36px, 6vw, 58px);
+    line-height: 1.05;
+    margin-bottom: 20px;
+  }
+  h1 em {
+    font-style: italic;
+    color: var(--rose-deep);
+  }
+  p.sub {
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.7;
+    max-width: 480px;
+    margin: 0 auto 40px;
+    opacity: 0.85;
+  }
+  .choices {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .choice {
+    display: block;
+    text-decoration: none;
+    color: var(--ink);
+    background: #fff;
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    padding: 22px 34px;
+    min-width: 200px;
+    transition: border-color .15s, transform .15s;
+  }
+  .choice:hover {
+    border-color: var(--rose);
+    transform: translateY(-2px);
+  }
+  .choice .flag {
+    font-size: 22px;
+    margin-bottom: 10px;
+  }
+  .choice .lang-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .choice .lang-note {
+    font-size: 11px;
+    font-weight: 300;
+    color: var(--rose-deep);
+    letter-spacing: 0.02em;
+  }
+  footer {
+    margin-top: 56px;
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+    opacity: 0.55;
+  }
+</style>
+</head>
+<body>
+
+  <div class="eyebrow">Unhidden</div>
+  <h1>The lifetime cost<br>of being a <em>woman</em></h1>
+  <p class="sub">A free, citation-backed calculator. Choose your version to begin.</p>
+
+  <div class="choices">
+    <a class="choice" href="eqly_index_sv.html">
+      <div class="flag">🇸🇪</div>
+      <div class="lang-name">Svenska</div>
+      <div class="lang-note">Med lönegap, VAB, pension & tillämpningsgap</div>
+    </a>
+    <a class="choice" href="the_hidden_cost_of_being_a_woman.html">
+      <div class="flag">🇬🇧</div>
+      <div class="lang-name">English</div>
+      <div class="lang-note">UK, US, Canada & Europe</div>
+    </a>
+  </div>
+
+  <footer>Nothing is stored. Nothing is sent. Figures stay on your device.</footer>
+
+</body>
+</html>
