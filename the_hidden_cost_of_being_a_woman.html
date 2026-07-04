@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Hidden Cost of Being a Woman</title>
+<style>
+  :root {
+    --pink: #D4537E;
+    --pink-light: #FBEAF0;
+    --pink-mid: #ED93B1;
+    --purple: #534AB7;
+    --purple-light: #EEEDFE;
+    --teal: #1D9E75;
+    --teal-light: #E1F5EE;
+    --amber: #BA7517;
+    --amber-light: #FAEEDA;
+    --coral: #D85A30;
+    --coral-light: #FAECE7;
+    --gray: #5F5E5A;
+    --gray-light: #F1EFE8;
+    --text: #2C2C2A;
+    --text-muted: #5F5E5A;
+    --border: rgba(0,0,0,0.12);
+    --bg: #fff;
+    --surface: #F8F7F4;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --text: #F1EFE8;
+      --text-muted: #B4B2A9;
+      --border: rgba(255,255,255,0.12);
+      --bg: #1a1a18;
+      --surface: #242420;
+      --pink-light: #3a1a28;
+      --purple-light: #1e1c3a;
+      --teal-light: #0a2820;
+      --amber-light: #2a1e06;
+      --coral-light: #2a1208;
+      --gray-light: #242420;
+    }
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); font-size: 16px; line-height: 1.6; }
+
+  .hero { padding: 3rem 2rem 2rem; text-align: center; border-bottom: 0.5px solid var(--border); }
+  .hero h1 { font-size: 2rem; font-weight: 500; margin-bottom: 0.5rem; }
+  .hero p { color: var(--text-muted); max-width: 560px; margin: 0 auto; font-size: 0.95rem; }
+
+  .sticky-total { position: sticky; top: 0; z-index: 100; background: var(--bg); border-bottom: 0.5px solid var(--border); padding: 0.75rem 2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+  .sticky-total .label { font-size: 0.85rem; color: var(--text-muted); }
+  .sticky-total .amount { font-size: 1.5rem; font-weight: 500; color: var(--pink); }
+  .sticky-total .note { font-size: 0.75rem; color: var(--text-muted); text-align: right; max-width: 220px; }
+
+  .settings { padding: 1.5rem 2rem; background: var(--surface); border-bottom: 0.5px solid var(--border); display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: flex-end; }
+  .settings label { font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 4px; }
+  .settings select, .settings input[type=number] { background: var(--bg); border: 0.5px solid var(--border); border-radius: 8px; padding: 6px 10px; font-size: 0.9rem; color: var(--text); cursor: pointer; }
+  .settings .setting-group { display: flex; flex-direction: column; }
+
+  .sections { max-width: 860px; margin: 0 auto; padding: 2rem; display: flex; flex-direction: column; gap: 2rem; }
+
+  .section { border: 0.5px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .section-header { padding: 1rem 1.25rem; display: flex; align-items: center; gap: 0.75rem; cursor: pointer; user-select: none; }
+  .section-header .icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+  .section-header .title-group { flex: 1; }
+  .section-header h2 { font-size: 1rem; font-weight: 500; }
+  .section-header .section-cost { font-size: 1rem; font-weight: 500; }
+  .section-header .chevron { font-size: 12px; color: var(--text-muted); transition: transform 0.2s; }
+  .section-header.open .chevron { transform: rotate(180deg); }
+
+  .section-body { padding: 0 1.25rem 1.25rem; display: none; border-top: 0.5px solid var(--border); padding-top: 1rem; }
+  .section-body.open { display: block; }
+
+  .cost-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; padding: 0.6rem 0; border-bottom: 0.5px solid var(--border); }
+  .cost-row:last-child { border-bottom: none; }
+  .cost-row .row-left { flex: 1; }
+  .cost-row .row-left .row-name { font-size: 0.9rem; font-weight: 500; }
+  .cost-row .row-left .row-desc { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; line-height: 1.4; }
+  .cost-row .row-right { text-align: right; flex-shrink: 0; }
+  .cost-row .row-amount { font-size: 0.95rem; font-weight: 500; }
+  .cost-row .row-toggle { display: flex; align-items: center; gap: 6px; margin-top: 4px; justify-content: flex-end; }
+  .cost-row input[type=checkbox] { cursor: pointer; accent-color: var(--pink); }
+  .cost-row .toggle-label { font-size: 0.75rem; color: var(--text-muted); }
+
+  .invisible-note { font-size: 0.78rem; color: var(--text-muted); font-style: italic; margin-top: 0.5rem; padding: 0.5rem 0.75rem; border-left: 2px solid var(--border); }
+
+  .section.pink .section-header { background: var(--pink-light); }
+  .section.pink .section-cost { color: var(--pink); }
+  .section.pink .icon { background: var(--pink); color: #fff; }
+  .section.purple .section-header { background: var(--purple-light); }
+  .section.purple .section-cost { color: var(--purple); }
+  .section.purple .icon { background: var(--purple); color: #fff; }
+  .section.teal .section-header { background: var(--teal-light); }
+  .section.teal .section-cost { color: var(--teal); }
+  .section.teal .icon { background: var(--teal); color: #fff; }
+  .section.amber .section-header { background: var(--amber-light); }
+  .section.amber .section-cost { color: var(--amber); }
+  .section.amber .icon { background: var(--amber); color: #fff; }
+  .section.coral .section-header { background: var(--coral-light); }
+  .section.coral .section-cost { color: var(--coral); }
+  .section.coral .icon { background: var(--coral); color: #fff; }
+  .section.gray .section-header { background: var(--gray-light); }
+  .section.gray .section-cost { color: var(--gray); }
+  .section.gray .icon { background: var(--gray); color: #fff; }
+
+  .chart-wrap { margin-top: 2rem; }
+  .chart-bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .chart-bar-label { font-size: 0.78rem; color: var(--text-muted); width: 140px; flex-shrink: 0; text-align: right; }
+  .chart-bar-track { flex: 1; background: var(--surface); border-radius: 4px; height: 20px; overflow: hidden; }
+  .chart-bar-fill { height: 100%; border-radius: 4px; transition: width 0.5s ease; }
+  .chart-bar-value { font-size: 0.78rem; font-weight: 500; width: 70px; flex-shrink: 0; }
+
+  .summary-box { background: var(--surface); border-radius: 12px; padding: 1.5rem; margin-top: 2rem; }
+  .summary-box h3 { font-size: 1rem; font-weight: 500; margin-bottom: 1rem; }
+  .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
+  .summary-card { background: var(--bg); border: 0.5px solid var(--border); border-radius: 8px; padding: 0.75rem 1rem; }
+  .summary-card .sc-label { font-size: 0.75rem; color: var(--text-muted); }
+  .summary-card .sc-value { font-size: 1.25rem; font-weight: 500; margin-top: 2px; }
+
+  footer { text-align: center; padding: 2rem; color: var(--text-muted); font-size: 0.8rem; border-top: 0.5px solid var(--border); margin-top: 2rem; }
+  footer a { color: var(--text-muted); }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>The Hidden Cost of Being a Woman</h1>
+  <p>A lifetime of invisible expenses — financial, physical, and professional — that rarely appear in any budget.</p>
+</div>
+
+<div class="sticky-total">
+  <div>
+    <div class="label">Estimated lifetime hidden cost</div>
+    <div class="amount" id="grand-total">£0</div>
+  </div>
+  <div class="note">Figures are estimates based on UK averages. Toggle items that apply to you.</div>
+</div>
+
+<div class="settings">
+  <div class="setting-group">
+    <label for="country">Country</label>
+    <select id="country">
+      <option value="GBP">🇬🇧 United Kingdom</option>
+      <option value="USD">🇺🇸 United States</option>
+      <option value="EUR">🇪🇺 Europe (EUR)</option>
+    </select>
+  </div>
+  <div class="setting-group">
+    <label for="salary">Annual salary (gross)</label>
+    <input type="number" id="salary" value="35000" min="10000" max="200000" step="1000">
+  </div>
+  <div class="setting-group">
+    <label for="work-years">Years in workforce</label>
+    <input type="number" id="work-years" value="40" min="10" max="50" step="1">
+  </div>
+</div>
+
+<div class="sections" id="sections-container"></div>
+
+<div style="max-width:860px;margin:0 auto;padding: 0 2rem 2rem;">
+  <div class="chart-wrap" id="chart-wrap"></div>
+  <div class="summary-box">
+    <h3>What this cost could have been instead</h3>
+    <div class="summary-grid" id="summary-grid"></div>
+  </div>
+</div>
+
+<footer>
+  Sources: Fawcett Society, Office for National Statistics, NICE guidelines, Endometriosis UK, TUC, IFS pension reports. <br>
+  This tool uses estimates — real costs vary by individual circumstance. Built to make the invisible visible.<br><br>
+  <a href="https://github.com/">View on GitHub</a>
+</footer>
+
+<script>
+const CURRENCIES = {
+  GBP: { symbol: '£', rate: 1 },
+  USD: { symbol: '$', rate: 1.27 },
+  EUR: { symbol: '€', rate: 1.17 }
+};
+
+const sections = [
+  {
+    id: 'body',
+    label: 'Body & health',
+    color: 'pink',
+    icon: '♀',
+    items: [
+      { id: 'period-products', name: 'Menstrual products', desc: 'Tampons, pads, cups, period underwear. ~£13/month for ~38 years.', base: 5928, enabled: true },
+      { id: 'pain-meds', name: 'Pain relief & hot water bottles', desc: 'OTC medication, heat patches, related products for period pain.', base: 1200, enabled: true },
+      { id: 'pmdd', name: 'PMDD management', desc: 'Therapy, supplements, medication for premenstrual dysphoric disorder (affects ~5–8% of women).', base: 8000, enabled: false },
+      { id: 'endo', name: 'Endometriosis costs', desc: 'Diagnosis delays average 8 years. Private consultations, ongoing treatment, time off work (affects 1 in 10).', base: 18000, enabled: false },
+      { id: 'migraine', name: 'Hormonal migraines', desc: 'Medication, lost work days, specialist visits for menstrual-related migraines.', base: 4500, enabled: false },
+      { id: 'fertility', name: 'Contraception (lifetime)', desc: 'Pills, coils, injections, implants — often not fully covered.', base: 3200, enabled: true },
+      { id: 'menopause', name: 'Menopause symptoms & treatment', desc: 'HRT, private consultations, supplements, lost productivity during perimenopause.', base: 6000, enabled: true },
+    ]
+  },
+  {
+    id: 'work',
+    label: 'Work & pay',
+    color: 'purple',
+    icon: '£',
+    items: [
+      { id: 'pay-gap', name: 'Lifetime pay gap', desc: 'Women earn ~84p for every £1 men earn in the UK. This compounds across a career.', dynamic: 'payGap', enabled: true },
+      { id: 'unpaid-labour', name: 'Unpaid office "glue work"', desc: 'Note-taking, mentoring juniors, organising socials, emotional support to colleagues — work that doesn\'t get promoted.', base: 12000, enabled: true },
+      { id: 'emotional-labour', name: 'Managing others\' comfort at work', desc: 'Softening feedback, de-escalating conflict, being "approachable". A tax on women\'s time and energy.', base: 0, enabled: true, invisible: true },
+      { id: 'school-glue', name: '"Social glue" conditioning from school', desc: 'Girls are socialised from childhood to smooth over conflict, include others, manage group dynamics — a lifetime unpaid skill.', base: 0, enabled: true, invisible: true },
+    ]
+  },
+  {
+    id: 'family',
+    label: 'Motherhood & family',
+    color: 'teal',
+    icon: '◎',
+    items: [
+      { id: 'maternity-pay', name: 'Statutory maternity pay gap', desc: 'Difference between full salary and SMP (£184/week) over 39 weeks, per child.', dynamic: 'maternity', enabled: false },
+      { id: 'miscarriage', name: 'Miscarriage costs', desc: 'Private scans, time off, mental health support. ~25% of pregnancies end in miscarriage.', base: 2500, enabled: false },
+      { id: 'childcare', name: 'Career interruption (childcare gap)', desc: 'Years out or reduced hours to manage childcare — compounding effect on salary progression.', dynamic: 'childcareGap', enabled: false },
+      { id: 'fertility-tx', name: 'Fertility treatment', desc: 'IVF and related treatments not always covered by NHS. Average private cycle ~£5,000.', base: 10000, enabled: false },
+    ]
+  },
+  {
+    id: 'pension',
+    label: 'Pension & retirement',
+    color: 'amber',
+    icon: '◇',
+    items: [
+      { id: 'pension-gap', name: 'Pension gap (career breaks)', desc: 'Women retire with ~35–40% less pension than men, driven by maternity leave, part-time work, care gaps.', dynamic: 'pensionGap', enabled: true },
+      { id: 'caring-pension', name: 'Pension loss from caring duties', desc: 'Leaving work to care for elderly parents or family members. Women provide 60% of unpaid care.', base: 22000, enabled: false },
+    ]
+  },
+  {
+    id: 'care',
+    label: 'Unpaid care & labour',
+    color: 'coral',
+    icon: '◉',
+    items: [
+      { id: 'elder-care', name: 'Elderly parent care', desc: 'Women provide on average 60% of informal elder care — often reducing hours or leaving work.', base: 15000, enabled: false },
+      { id: 'domestic', name: 'Domestic labour gap (unpaid)', desc: 'Women do on average 16 more hours of unpaid housework and childcare per week than male partners.', base: 0, enabled: true, invisible: true },
+      { id: 'mental-load', name: 'The mental load', desc: 'Planning, remembering, managing family admin — invisible cognitive labour that doesn\'t stop.', base: 0, enabled: true, invisible: true },
+    ]
+  },
+  {
+    id: 'safety',
+    label: 'Safety & appearance',
+    color: 'gray',
+    icon: '◈',
+    items: [
+      { id: 'pink-tax', name: 'Pink tax (gendered pricing)', desc: 'Women\'s products cost ~7% more than equivalent men\'s versions — razors, deodorant, clothing.', base: 3500, enabled: true },
+      { id: 'safety', name: 'Personal safety costs', desc: 'Taxis instead of walking at night, safety apps, self-defence classes, well-lit routes = extra cost.', base: 4000, enabled: true },
+      { id: 'appearance', name: 'Professional appearance premium', desc: 'Women face stronger expectation to wear makeup, styled hair, professional dress in workplace settings.', base: 9000, enabled: true },
+    ]
+  },
+];
+
+let currency = 'GBP';
+let salary = 35000;
+let workYears = 40;
+let enabled = {};
+
+sections.forEach(s => s.items.forEach(i => { enabled[i.id] = i.enabled; }));
+
+function fmt(n) {
+  const { symbol, rate } = CURRENCIES[currency];
+  return symbol + Math.round(n * rate).toLocaleString();
+}
+
+function dynamic(key) {
+  const gap = 0.16;
+  switch(key) {
+    case 'payGap': return salary * gap * workYears * 0.6;
+    case 'maternity': return Math.max(0, (salary / 52) - 184) * 39;
+    case 'childcareGap': return salary * 0.25 * 5;
+    case 'pensionGap': return salary * 0.08 * workYears * 0.38;
+    default: return 0;
+  }
+}
+
+function itemValue(item) {
+  if (!enabled[item.id]) return 0;
+  if (item.invisible) return 0;
+  if (item.dynamic) return dynamic(item.dynamic);
+  return item.base || 0;
+}
+
+function sectionTotal(section) {
+  return section.items.reduce((sum, i) => sum + itemValue(i), 0);
+}
+
+function grandTotal() {
+  return sections.reduce((sum, s) => sum + sectionTotal(s), 0);
+}
+
+function buildSections() {
+  const container = document.getElementById('sections-container');
+  container.innerHTML = '';
+  sections.forEach(s => {
+    const sec = document.createElement('div');
+    sec.className = `section ${s.color}`;
+    sec.id = `sec-${s.id}`;
+
+    const header = document.createElement('div');
+    header.className = 'section-header';
+    header.innerHTML = `
+      <div class="icon">${s.icon}</div>
+      <div class="title-group"><h2>${s.label}</h2></div>
+      <div class="section-cost" id="cost-${s.id}">${fmt(sectionTotal(s))}</div>
+      <div class="chevron">▼</div>
+    `;
+    header.addEventListener('click', () => {
+      header.classList.toggle('open');
+      body.classList.toggle('open');
+    });
+
+    const body = document.createElement('div');
+    body.className = 'section-body';
+
+    s.items.forEach(item => {
+      const row = document.createElement('div');
+      row.className = 'cost-row';
+      const val = item.invisible ? null : itemValue(item);
+      row.innerHTML = `
+        <div class="row-left">
+          <div class="row-name">${item.name}</div>
+          <div class="row-desc">${item.desc}</div>
+          ${item.invisible ? `<p class="invisible-note">This cost is real but impossible to fully quantify in money — it's carried in time, energy and wellbeing.</p>` : ''}
+        </div>
+        <div class="row-right">
+          <div class="row-amount" id="val-${item.id}">${item.invisible ? '—' : fmt(val)}</div>
+          <div class="row-toggle">
+            <input type="checkbox" id="chk-${item.id}" ${enabled[item.id] ? 'checked' : ''}>
+            <label class="toggle-label" for="chk-${item.id}">applies to me</label>
+          </div>
+        </div>
+      `;
+      row.querySelector(`#chk-${item.id}`).addEventListener('change', e => {
+        enabled[item.id] = e.target.checked;
+        update();
+      });
+      body.appendChild(row);
+    });
+
+    sec.appendChild(header);
+    sec.appendChild(body);
+    container.appendChild(sec);
+  });
+}
+
+function buildChart() {
+  const wrap = document.getElementById('chart-wrap');
+  const colors = { pink: '#D4537E', purple: '#534AB7', teal: '#1D9E75', amber: '#BA7517', coral: '#D85A30', gray: '#5F5E5A' };
+  const totals = sections.map(s => ({ label: s.label, color: colors[s.color], val: sectionTotal(s) }));
+  const max = Math.max(...totals.map(t => t.val), 1);
+  wrap.innerHTML = `<div style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1rem;">Cost breakdown by category</div>` +
+    totals.map(t => `
+      <div class="chart-bar-row">
+        <div class="chart-bar-label">${t.label}</div>
+        <div class="chart-bar-track">
+          <div class="chart-bar-fill" style="width:${Math.round(t.val/max*100)}%;background:${t.color};"></div>
+        </div>
+        <div class="chart-bar-value">${fmt(t.val)}</div>
+      </div>`).join('');
+}
+
+function buildSummary() {
+  const total = grandTotal();
+  const { symbol, rate } = CURRENCIES[currency];
+  const grid = document.getElementById('summary-grid');
+  const items = [
+    { label: 'Years of a median salary', value: total > 0 ? (total / (salary * CURRENCIES[currency].rate)).toFixed(1) + ' years' : '—' },
+    { label: 'Monthly equivalent', value: fmt(total / (workYears * 12)) },
+    { label: 'Could fund a pension top-up of', value: fmt(total / workYears) + '/yr' },
+    { label: 'Or a home deposit in', value: total > 0 ? Math.ceil(40000 * rate / (total / (workYears * 12))) + ' months saving' : '—' },
+  ];
+  grid.innerHTML = items.map(i => `
+    <div class="summary-card">
+      <div class="sc-label">${i.label}</div>
+      <div class="sc-value">${i.value}</div>
+    </div>`).join('');
+}
+
+function update() {
+  document.getElementById('grand-total').textContent = fmt(grandTotal());
+  sections.forEach(s => {
+    const el = document.getElementById(`cost-${s.id}`);
+    if (el) el.textContent = fmt(sectionTotal(s));
+    s.items.forEach(item => {
+      const el = document.getElementById(`val-${item.id}`);
+      if (el && !item.invisible) el.textContent = fmt(itemValue(item));
+    });
+  });
+  buildChart();
+  buildSummary();
+}
+
+document.getElementById('country').addEventListener('change', e => { currency = e.target.value; update(); });
+document.getElementById('salary').addEventListener('input', e => { salary = +e.target.value || 35000; update(); });
+document.getElementById('work-years').addEventListener('input', e => { workYears = +e.target.value || 40; update(); });
+
+buildSections();
+update();
+</script>
+</body>
+</html>
