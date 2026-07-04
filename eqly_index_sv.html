@@ -3,28 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Eqly Index — Livstidskostnaden för kvinnor i Sverige</title>
+<title>Eqly Index: Livstidskostnaden för kvinnor i Sverige</title>
 <meta name="description" content="En gratis, källhänvisad livstidsräknare. Lönegap, pension, föräldraledighet, och vården.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --ink: #1a1614;
-    --paper: #f4ede1;
-    --paper-warm: #ebe1d0;
-    --paper-soft: #faf5ec;
-    --rose: #b04865;
-    --rose-deep: #7a2a3f;
-    --rose-soft: #e9c9d0;
-    --rose-pale: #f6e3e8;
-    --sage: #4a6b5c;
-    --sage-soft: #d9e3dc;
-    --gold: #c89b3a;
-    --gold-soft: #f0e1c0;
-    --rule: rgba(26, 22, 20, 0.18);
-    --rule-strong: rgba(26, 22, 20, 0.4);
-    --shadow: 0 1px 3px rgba(26, 22, 20, 0.06);
+    --ink: #3A1A08;
+    --paper: #F5EDE0;
+    --paper-warm: #EDD8BC;
+    --paper-soft: #F9F2E5;
+    --rose: #C4704A;
+    --rose-deep: #7A3018;
+    --rose-soft: #E8A070;
+    --rose-pale: #F5DCC8;
+    --sage: #6B8B30;
+    --sage-soft: #DCE5C4;
+    --gold: #E8A020;
+    --gold-soft: #F5DFA8;
+    --rule: rgba(58, 26, 8, 0.18);
+    --rule-strong: rgba(58, 26, 8, 0.4);
+    --shadow: 0 1px 3px rgba(58, 26, 8, 0.06);
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -32,7 +32,7 @@
   html, body {
     background: var(--paper);
     color: var(--ink);
-    font-family: 'Fraunces', Georgia, serif;
+    font-family: 'Cormorant Garamond', Georgia, serif;
     font-feature-settings: "ss01", "ss02";
     line-height: 1.55;
     -webkit-font-smoothing: antialiased;
@@ -44,14 +44,14 @@
     position: fixed;
     inset: 0;
     background-image:
-      radial-gradient(circle at 15% 20%, rgba(176, 72, 101, 0.05) 0%, transparent 45%),
-      radial-gradient(circle at 85% 75%, rgba(74, 107, 92, 0.04) 0%, transparent 45%);
+      radial-gradient(circle at 15% 20%, rgba(196, 112, 74, 0.05) 0%, transparent 45%),
+      radial-gradient(circle at 85% 75%, rgba(107, 139, 48, 0.04) 0%, transparent 45%);
     pointer-events: none;
     z-index: 0;
   }
 
   .mono {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'DM Sans', sans-serif;
     font-size: 11px;
     letter-spacing: 0.12em;
     text-transform: uppercase;
@@ -71,7 +71,7 @@
     padding-bottom: 18px;
   }
   .masthead .left, .masthead .right {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'DM Sans', sans-serif;
     font-size: 10.5px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
@@ -79,7 +79,7 @@
   }
   .masthead .right { text-align: right; }
   .masthead .brand {
-    font-family: 'Fraunces', serif;
+    font-family: 'Cormorant Garamond', serif;
     font-weight: 900;
     font-style: italic;
     font-size: 26px;
@@ -101,7 +101,7 @@
     margin-bottom: 18px;
   }
   .hero h1 {
-    font-family: 'Fraunces', serif;
+    font-family: 'Cormorant Garamond', serif;
     font-weight: 400;
     font-size: clamp(44px, 6.5vw, 88px);
     line-height: 0.97;
@@ -115,7 +115,7 @@
     color: var(--rose-deep);
   }
   .hero .lede {
-    font-family: 'Fraunces', serif;
+    font-family: 'Cormorant Garamond', serif;
     font-style: italic;
     font-weight: 300;
     font-size: 21px;
@@ -125,7 +125,7 @@
     margin-bottom: 8px;
   }
   .hero .lede-sub {
-    font-family: 'Fraunces', serif;
+    font-family: 'Cormorant Garamond', serif;
     font-size: 15px;
     color: var(--sage);
     max-width: 640px;
@@ -143,7 +143,7 @@
     border-bottom: 1.5px solid var(--ink);
     padding: 14px 0;
     margin-top: 24px;
-    box-shadow: 0 2px 0 rgba(26, 22, 20, 0.05);
+    box-shadow: 0 2px 0 rgba(58, 26, 8, 0.05);
   }
   .sticky-inner {
     max-width: 1180px;
@@ -159,7 +159,7 @@
     color: var(--rose);
   }
   .sticky-value {
-    font-family: 'Fraunces', serif;
+    font-family: 'Cormorant Garamond', serif;
     font-style: italic;
     font-weight: 300;
     font-size: clamp(32px, 4vw, 52px);
@@ -195,7 +195,7 @@
     border: 1px solid var(--rule);
     border-radius: 4px;
     padding: 12px 14px;
-    font-family: 'Fraunces', serif;
+    font-family: 'Cormorant Garamond', serif;
     font-size: 16px;
     color: var(--ink);
     transition: border-color 0.2s;
@@ -207,7 +207,7 @@
   }
   .control .hint {
     margin-top: 6px;
-    font-family: 'Fraunces', serif;
+    font-family: 'Cormorant Garamond', serif;
     font-size: 13px;
     color: var(--sage);
     font-style: italic;
@@ -245,20 +245,20 @@
     color: var(--rose);
   }
   .section-head h2 {
-    font-family: 'Fraunces', serif;
+    font-family: 'Cormorant Garamond', serif;
     font-weight: 500;
     font-size: 28px;
     letter-spacing: -0.01em;
   }
   .section-total {
-    font-family: 'Fraunces', serif;
+    font-family: 'Cormorant Garamond', serif;
     font-style: italic;
     font-weight: 400;
     font-size: 24px;
     color: var(--rose-deep);
   }
   .section-intro {
-    font-family: 'Fraunces', serif;
+    font-family: 'Cormorant Garamond', serif;
     font-size: 16px;
     color: var(--ink);
     max-width: 720px;
@@ -286,7 +286,7 @@
   }
   .item.invisible {
     background: var(--gold-soft);
-    border-color: rgba(200, 155, 58, 0.35);
+    border-color: rgba(232, 160, 32, 0.35);
   }
   .item-header {
     display: flex;
@@ -295,14 +295,14 @@
     margin-bottom: 8px;
   }
   .item-name {
-    font-family: 'Fraunces', serif;
+    font-family: 'Cormorant Garamond', serif;
     font-weight: 500;
     font-size: 17px;
     line-height: 1.3;
     flex: 1;
   }
   .item-value {
-    font-family: 'Fraunces', serif;
+    font-family: 'Cormorant Garamond', serif;
     font-style: italic;
     font-weight: 400;
     font-size: 19px;
@@ -317,7 +317,7 @@
     align-self: center;
   }
   .item-desc {
-    font-family: 'Fraunces', serif;
+    font-family: 'Cormorant Garamond', serif;
     font-size: 14px;
     color: var(--ink);
     line-height: 1.5;
@@ -329,7 +329,7 @@
     font-size: 9.5px;
     letter-spacing: 0.06em;
   }
-  .item-cite a { color: var(--sage); text-decoration: underline; text-decoration-color: rgba(74,107,92,0.3); }
+  .item-cite a { color: var(--sage); text-decoration: underline; text-decoration-color: rgba(107,139,48,0.3); }
   .item-cite a:hover { text-decoration-color: var(--sage); }
   .toggle-row {
     display: flex;
@@ -363,7 +363,7 @@
   .toggle-row input:checked + .toggle { background: var(--rose); }
   .toggle-row input:checked + .toggle::after { transform: translateX(16px); }
   .toggle-label {
-    font-family: 'Fraunces', serif;
+    font-family: 'Cormorant Garamond', serif;
     font-size: 14px;
     color: var(--ink);
   }
@@ -377,7 +377,7 @@
     border-radius: 2px;
   }
   .essay h3 {
-    font-family: 'Fraunces', serif;
+    font-family: 'Cormorant Garamond', serif;
     font-weight: 500;
     font-style: italic;
     font-size: 26px;
@@ -386,7 +386,7 @@
     color: var(--rose-deep);
   }
   .essay p {
-    font-family: 'Fraunces', serif;
+    font-family: 'Cormorant Garamond', serif;
     font-size: 16px;
     line-height: 1.7;
     margin-bottom: 14px;
@@ -398,7 +398,7 @@
     color: var(--rose-deep);
     margin-top: 18px;
     padding-top: 18px;
-    border-top: 1px solid rgba(176, 72, 101, 0.25);
+    border-top: 1px solid rgba(196, 112, 74, 0.25);
     font-size: 17px;
   }
 
@@ -424,7 +424,7 @@
     margin-bottom: 12px;
   }
   .summary h2 {
-    font-family: 'Fraunces', serif;
+    font-family: 'Cormorant Garamond', serif;
     font-weight: 400;
     font-style: italic;
     font-size: clamp(32px, 4vw, 48px);
@@ -444,7 +444,7 @@
     margin-bottom: 10px;
   }
   .summary-card .sc-value {
-    font-family: 'Fraunces', serif;
+    font-family: 'Cormorant Garamond', serif;
     font-style: italic;
     font-weight: 300;
     font-size: 32px;
@@ -452,7 +452,7 @@
     line-height: 1.1;
   }
   .summary-card .sc-note {
-    font-family: 'Fraunces', serif;
+    font-family: 'Cormorant Garamond', serif;
     font-size: 13px;
     color: var(--paper-warm);
     margin-top: 6px;
@@ -470,13 +470,13 @@
     text-align: center;
   }
   .signup h3 {
-    font-family: 'Fraunces', serif;
+    font-family: 'Cormorant Garamond', serif;
     font-weight: 500;
     font-size: 22px;
     margin-bottom: 8px;
   }
   .signup p {
-    font-family: 'Fraunces', serif;
+    font-family: 'Cormorant Garamond', serif;
     font-size: 15px;
     color: var(--sage);
     max-width: 480px;
@@ -497,7 +497,7 @@
     border: 1px solid var(--rule-strong);
     border-radius: 4px;
     background: var(--paper-soft);
-    font-family: 'Fraunces', serif;
+    font-family: 'Cormorant Garamond', serif;
     font-size: 15px;
   }
   .signup-form input:focus {
@@ -510,7 +510,7 @@
     color: var(--paper);
     border: none;
     border-radius: 4px;
-    font-family: 'Fraunces', serif;
+    font-family: 'Cormorant Garamond', serif;
     font-size: 15px;
     font-weight: 500;
     cursor: pointer;
@@ -544,7 +544,7 @@
     flex-wrap: wrap;
   }
   .colophon .center {
-    font-family: 'Fraunces', serif;
+    font-family: 'Cormorant Garamond', serif;
     font-style: italic;
     font-size: 14px;
     text-transform: none;
@@ -553,7 +553,7 @@
   }
   .colophon .right { text-align: right; }
   .sources {
-    font-family: 'Fraunces', serif;
+    font-family: 'Cormorant Garamond', serif;
     font-size: 13px;
     line-height: 1.7;
     color: var(--sage);
@@ -589,10 +589,10 @@
 
 <!-- ===== HERO ===== -->
 <section class="hero">
-  <div class="kicker mono">— Livstidskostnaden för kvinnor i Sverige</div>
+  <div class="kicker mono">Livstidskostnaden för kvinnor i Sverige</div>
   <h1>Vad kostar <em>jämlikhet</em> egentligen kvinnan som lever den?</h1>
-  <p class="lede">En gratis, källhänvisad räknare. Bocka i de kategorier som gäller dig, och se livstidskostnaden i svenska kronor — lönegap, föräldraledighet, levnadskostnaderna och pensionspåverkan.</p>
-  <p class="lede-sub">Varje siffra länkar till sin källa — Medlingsinstitutet, Försäkringskassan, Pensionsmyndigheten, SCB, själva lagen. Ingenting lagras. Ingenting skickas. Siffrorna stannar på din enhet.</p>
+  <p class="lede">En gratis, källhänvisad räknare. Bocka i de kategorier som gäller dig, och se livstidskostnaden i svenska kronor: lönegap, föräldraledighet, levnadskostnaderna och pensionspåverkan.</p>
+  <p class="lede-sub">Varje siffra länkar till sin källa: Medlingsinstitutet, Försäkringskassan, Pensionsmyndigheten, SCB, själva lagen. Ingenting lagras. Ingenting skickas. Siffrorna stannar på din enhet.</p>
 </section>
 
 <!-- ===== STICKY TOTAL ===== -->
@@ -646,9 +646,9 @@
   <div class="essay">
     <h3>Sverige säger att det är jämlikt. Statistiken säger något annat.</h3>
     <p>Det ojusterade lönegapet i Sverige ligger på cirka 9,9%. Kvinnors pension är ungefär 70 % av mäns. Kvinnor tar 70 % av alla föräldrapenningdagar och 60 % av VAB-dagarna för sjukt barn. Ingenting av detta är nyheter.</p>
-    <p>Det som är mindre erkänt är den strukturella anledningen till att dessa gap kvarstår. Svensk lag gör vad den kan — gemensam vårdnad är standard, föräldrapenning är generös, lönekartläggning är obligatorisk. Lagarna finns. De är skrivna. De är mestadels rättvisa på papperet.</p>
-    <p>Gapet ligger i <em>tillämningen</em>. När lagen inte följs är det nästan alltid kvinnan som måste tvinga igenom det: hyra advokat för att genomdriva tillgångsbeskrivning, anmäla till Försäkringskassan om bristande underhållsbidrag, ta de opagda dagarna när ett barn är sjukt, göra skoladministrationen år efter år. Systemet mäter sig själv på det som står på papperet, inte på vad som faktiskt sker.</p>
-    <p class="pattern">Den här räknaren räknar båda. De synliga kostnaderna som lagen försöker adressera. Och den osynliga tillämningskatten som håller kvinnor kvar i att betala för alla andras jämlikhet.</p>
+    <p>Det som är mindre erkänt är den strukturella anledningen till att dessa gap kvarstår. Svensk lag gör vad den kan. Gemensam vårdnad är standard, föräldrapenning är generös, lönekartläggning är obligatorisk. Lagarna finns. De är skrivna. De är mestadels rättvisa på papperet.</p>
+    <p>Gapet ligger i <em>tillämpningen</em>. När lagen inte följs är det nästan alltid kvinnan som måste tvinga igenom det: anlita en advokat för att driva igenom rättvist underhåll, anmäla till Försäkringskassan om bristande underhållsbidrag, ta dagar för vård av sjukt barn, när hen är sjuk, vara den involverade parten i skolmöten om dessa behövs. Systemet mäter sig själv på det som står på papperet, inte på vad som faktiskt sker.</p>
+    <p class="pattern">Den här räknaren räknar båda. De synliga kostnaderna som lagen försöker adressera. Och den osynliga tillämpningskatten som håller kvinnor kvar i att betala för alla andras jämlikhet.</p>
   </div>
 
   <!-- Sections rendered dynamically below -->
@@ -658,7 +658,7 @@
   <div class="summary">
     <div class="label mono">I enkla ord</div>
     <h2 id="summary-headline">Din beräknade livstidskostnad.</h2>
-    <p style="font-family:'Fraunces',serif; font-size:17px; line-height:1.6; max-width:680px; color:var(--paper-warm); font-style:italic;">
+    <p style="font-family:'Cormorant Garamond',serif; font-size:17px; line-height:1.6; max-width:680px; color:var(--paper-warm); font-style:italic;">
       Det här är vad den strukturella kostnaden för att vara kvinna i Sverige ser ut, summerad över de kategorier du bockat i.
     </p>
     <div class="summary-grid" id="summary-grid"></div>
@@ -680,14 +680,14 @@
 <!-- ===== FOOTER ===== -->
 <footer>
   <div class="colophon">
-    <div class="left mono">Satt i Fraunces &amp; JetBrains Mono</div>
-    <div class="center">Eqly — lönegap gjort synligt.</div>
+    <div class="left mono">Satt i Cormorant Garamond &amp; DM Sans</div>
+    <div class="center">Eqly: lönegap gjort synligt.</div>
     <div class="right mono">eqly.eu · 2026</div>
   </div>
   <div class="sources">
     <p style="margin-bottom:14px;"><strong>Statistiska källor.</strong> Medlingsinstitutet (årlig rapport om lönegap). Försäkringskassan (föräldraledighet, VAB, sjukfrånvaro). Pensionsmyndigheten (pensionsgap efter kön). SCB (lönestrukturstatistik). Konsumentverket (årlig kostnadsberäkning för barn). Endometriosföreningen Sverige.</p>
     <p style="margin-bottom:14px;"><strong>Juridiska Referenser.</strong> Diskrimineringslagen (2008:567) Kap. 3 §§ 8–10. Föräldraledighetslagen (1995:584). Föräldrabalken (1949:381) Kap. 6–7. Äktenskapsbalken (1987:230). Socialförsäkringsbalken (2010:110) Kap. 11–13, 22. Sjuklönelagen (1991:1047). EU:s direktiv om lönetransparens 2023/970, Artiklarna 4, 5, 9.</p>
-    <p style="font-style:italic;">Siffrorna är uppskattningar. Verkliga kostnader varierar efter individuell situation. Räknaren körs helt i din webbläsare — ingenting lagras eller skickas.</p>
+    <p style="font-style:italic;">Siffrorna är uppskattningar. Verkliga kostnader varierar efter individuell situation. Räknaren körs helt i din webbläsare. Ingenting lagras eller skickas.</p>
   </div>
 </footer>
 
@@ -715,19 +715,19 @@ const sections = [
       { id: 'pay-gap', name: 'Livstidslönegap', desc: 'Det ojusterade lönegapet i Sverige ligger på omkring 9,9%. Det justerade gapet (kontrollerat för yrke och sektor) ligger på omkring 4,7%. Den här räknaren använder den justerade siffran som en konservativ uppskattning.', cite: 'Medlingsinstitutet, Löneskillnader mellan kvinnor och män (2024)', dynamic: 'payGap', enabled: true },
       { id: 'glue-work', name: 'Osynligt "lim-arbete"', desc: 'Anteckningar, mentorskap, organisering av avtackning, konfliktlösning. Oproportionerligt utförda av kvinnor. Sällan befordrad, ofta förväntad.', cite: 'Tara Mohr / Harvard Business Review forskning om genuskodat arbete', base: 0, enabled: true, invisible: true },
       { id: 'negotiation-penalty', name: 'Straffet för lönekrav', desc: 'Kvinnor som förhandlar självsäkert är 30 % mer benägna att uppfattas negativt än män som gör detsamma. Under en karriär undertrycker detta startlöner och höjningar.', cite: 'Bowles, Babcock & Lai (2007); replikerat flera gånger sedan', base: 180000, enabled: true },
-      { id: 'caregiver-bias', name: 'Lönesmälta för vårdare', desc: 'Lönekurvor där vårdarroll är känd för arbetsgivaren resulterar ofta i lägre erbjudanden och långsammare höjningar. Skyddet ligger inte i Diskrimineringslagen — vårdnadsansvar är inte en av de sju skyddsgrunderna där. Det verkliga skyddet är missgynnandeförbudet i Föräldraledighetslagen: arbetsgivaren får inte missgynna en anställd av skäl som har samband med föräldraledighet (inkl. VAB) i lön, befordran eller villkor. Bevisbördan är omvänd.', cite: 'Correll, Benard & Paik (2007), moderskapsstraff-forskning; Föräldraledighetslagen (1995:584) 16, 22–25 §§ (missgynnandeförbud) — ej Diskrimineringslagen, se DiskrL 1 kap. 5 §', base: 240000, enabled: false },
+      { id: 'caregiver-bias', name: 'Lönesmälta för vårdare', desc: 'Lönekurvor där vårdarroll är känd för arbetsgivaren resulterar ofta i lägre erbjudanden och långsammare höjningar. Skyddet ligger inte i Diskrimineringslagen. Vårdnadsansvar är inte en av de sju skyddsgrunderna där. Det verkliga skyddet är missgynnandeförbudet i Föräldraledighetslagen: arbetsgivaren får inte missgynna en anställd av skäl som har samband med föräldraledighet (inkl. VAB) i lön, befordran eller villkor. Bevisbördan är omvänd.', cite: 'Correll, Benard & Paik (2007), moderskapsstraff-forskning; Föräldraledighetslagen (1995:584) 16, 22–25 §§ (missgynnandeförbud); ej Diskrimineringslagen, se DiskrL 1 kap. 5 §', base: 240000, enabled: false },
     ]
   },
   {
     id: 'föräldraskap',
     label: 'Föräldraskap & omsorg',
-    intro: "Föräldraledigheten är generös i Sverige — 480 dagar per barn. Men året som är delat är inte det som gör kvinnor sjuka, missar löneökning och förlorar pension. Det är åren efter.",
+    intro: "Föräldraledigheten är generös i Sverige: 480 dagar per barn. Men året som är delat är inte det som gör kvinnor sjuka, missar löneökning och förlorar pension. Det är åren efter.",
     items: [
       { id: 'parental-leave', name: 'Föräldraledighetens inkomstgap', desc: 'Föräldrapenning är begränsad till ~80 % av inkomst upp till ett tak, därefter sjunker det kraftigt. Kvinnor tar 70 % av alla ledighetsdagar, absorberande inkomstgapet och karriärpausen.', cite: 'Försäkringskassan, jämställdhetsstatistik; Socialförsäkringsbalken Kap. 11–12', dynamic: 'parentalLeaveGap', enabled: true },
       { id: 'vab', name: 'VAB-asymmetri', desc: 'Vård av sjukt barn (tillfällig föräldraspänn) betalas på ~80 % av inkomst men med karensavdrag. Kvinnor tar ~60 % av alla VAB-dagar. Under 18 år per barn adderas det upp.', cite: 'Försäkringskassan; Socialförsäkringsbalken Kap. 13', dynamic: 'vabCost', enabled: true },
       { id: 'school-admin', name: 'Skol- och omsorgsadministration', desc: 'Hämtning, avlämning, föräldramöten, planering, läkarbesök, sjuka-barn-dagar i skolan. Ofta beskriven som "den andra skiftet". Nästan helt obetald.', base: 0, enabled: true, invisible: true },
       { id: 'enforcement-tax', name: 'Tillämningsgapet', desc: 'När en medförälder inte delar omsorgen faller bördan på henne. Underhållsbidrag är minimum 1 873 kr/månad (Försäkringskassan). Konsumentverkets uppskattade verklig kostnad att fostra ett tonårsbarn är 5 000–6 000 kr/månad, exklusive bostäder. Skillnaden betalar hon.', cite: 'Försäkringskassan underhållsstöd; Konsumentverket beräknade barnkostnader; Föräldrabalken Kap. 7', dynamic: 'enforcementGap', enabled: false },
-      { id: 'special-needs', name: 'Särskilt behov-premien', desc: 'När ett barn har särskilt behov — autism, ADHD, ångest, funktionsnedsättning — växer omsorgsbördan. Ofta bär en förälder den nästan helt. Omvårdnadsbidrag finns (Socialförsäkringsbalken Kap. 22) men kompenserar inte för förlorad inkomst eller karriärpåverkan.', cite: 'Socialstyrelsen; Socialförsäkringsbalken Kap. 22 (omvårdnadsbidrag)', base: 480000, enabled: false },
+      { id: 'special-needs', name: 'Särskilt behov-premien', desc: 'När ett barn har särskilt behov, till exempel autism, ADHD, ångest eller funktionsnedsättning, växer omsorgsbördan. Ofta bär en förälder den nästan helt. Omvårdnadsbidrag finns (Socialförsäkringsbalken Kap. 22) men kompenserar inte för förlorad inkomst eller karriärpåverkan.', cite: 'Socialstyrelsen; Socialförsäkringsbalken Kap. 22 (omvårdnadsbidrag)', base: 480000, enabled: false },
     ]
   },
   {
@@ -742,7 +742,7 @@ const sections = [
   {
     id: 'hälsa',
     label: 'Hälsa & kropp',
-    intro: "Sveriges vård har högkostnadsskydd som begränsar kostnad från egen ficka. Så kontantkostnad för kvinnors hälsa är moderat. Tidskostnaden — förlorade arbetsdagar, långa väntider, tilläggsvård — är det inte.",
+    intro: "Sveriges vård har högkostnadsskydd som begränsar kostnad från egen ficka. Så kontantkostnad för kvinnors hälsa är moderat. Tidskostnaden (förlorade arbetsdagar, långa väntetider, tilläggsvård) är det inte.",
     items: [
       { id: 'sjukfranvaro', name: 'Långsiktig sjukfrånvaro', desc: 'Kvinnor har 60–70 % högre långsiktig sjukfrånvaro än män, med stress-relaterade och gynekologiska tillstånd som driver gapet. Karensavdrag och reducerad inkomst förstärker över karriären.', cite: 'Försäkringskassan, sjukfrånvarostatistik; Sjuklönelagen (1991:1047)', base: 220000, enabled: true },
       { id: 'menstrual', name: 'Menstruationsprodukter & vård', desc: 'Ungefär 38 år av månadskostnader. Sverige har reducerat mervärdesskatt på menstruationsprodukter till 6 % men livstidskostnaden är fortfarande väsentlig.', base: 36000, enabled: true },
@@ -753,11 +753,11 @@ const sections = [
   {
     id: 'separation',
     label: 'Om det inte går enligt planerna',
-    intro: "Dessa kategorier gäller inte alla. De gäller många kvinnor. ”Jämlikhetsteatern-skatten” — vad kvinnor betalar för att systemet säger sig vara jämlikt, så när det inte är det faller bördan av att fixa det på henne.",
+    intro: "Dessa kategorier gäller inte alla. De gäller många kvinnor. ”Jämlikhetsteatern-skatten”: vad kvinnor betalar för att systemet säger sig vara jämlikt, så när det inte är det faller bördan av att fixa det på henne.",
     items: [
       { id: 'asset-division', name: 'Omtvistade tillgångsbeskrivning', desc: 'Giftorättsgods delas lika enligt Äktenskapsbalken (1987:230). Om en tidigare partner vägrar följa med krävs en advokat för tilltvingande. Stockholm familjelags genomsnitt: okomplicerad bodelning 15 000–30 000 kr; omtvistade 50 000–200 000 kr.', cite: 'Äktenskapsbalken (1987:230); Sveriges Advokatsamfund prisvägledn', base: 75000, enabled: false },
-      { id: 'underhallsbidrag-gap', name: 'Underhållsbidrag-tvingande', desc: 'Föreslaget minimum är 1 873 kr/månad per barn under 15 år, något högre efteråt. Om den andra föräldern vägrar betala använder Försäkringskassan underhållsstöd — men på minimisumman, inte vad barnet faktiskt kostar.', cite: 'Försäkringskassan underhållsstöd; Föräldrabalken Kap. 7', dynamic: 'underhallsBidragGap', enabled: false },
-      { id: 'sole-caregiver', name: 'De facto endast vårdgivare', desc: 'Gemensam vårdnad (gemensam vårdnad) är standard enligt Föräldrabalken Kap. 6. Gemensam juridisk vårdnad är inte gemensam daglig vård. När den andra föräldern inte visar upp är bördan — och kostnaden — helt hos den föräldern som gör det.', cite: 'Föräldrabalken (1949:381) Kap. 6', base: 320000, enabled: false },
+      { id: 'underhallsbidrag-gap', name: 'Underhållsbidrag-tvingande', desc: 'Föreslaget minimum är 1 873 kr/månad per barn under 15 år, något högre efteråt. Om den andra föräldern vägrar betala använder Försäkringskassan underhållsstöd, men på minimisumman, inte vad barnet faktiskt kostar.', cite: 'Försäkringskassan underhållsstöd; Föräldrabalken Kap. 7', dynamic: 'underhallsBidragGap', enabled: false },
+      { id: 'sole-caregiver', name: 'De facto endast vårdgivare', desc: 'Gemensam vårdnad (gemensam vårdnad) är standard enligt Föräldrabalken Kap. 6. Gemensam juridisk vårdnad är inte gemensam daglig vård. När den andra föräldern inte visar upp faller bördan och kostnaden helt på den föräldern som gör det.', cite: 'Föräldrabalken (1949:381) Kap. 6', base: 320000, enabled: false },
     ]
   },
   {
@@ -766,7 +766,7 @@ const sections = [
     intro: "Dessa kostnader kan ärligt talat inte kvantifieras, och räknaren låtsas inte göra det. De är listade för att ignorera dem är det dyraste av allt.",
     items: [
       { id: 'mental-load', name: 'Den mentala lasten', desc: 'Planering, minne, anticipering, samordning. Det kognitiva arbete att driva ett hushål och familj som löper oavsett om du sover.', base: 0, enabled: true, invisible: true },
-      { id: 'emotional-labour', name: 'Emotionellt arbete', desc: 'Hantering av andras känslor — hemma, på jobbet, i vänskapen. Mjukning, anticipering, tröst, medling. Osynligt efter design.', base: 0, enabled: true, invisible: true },
+      { id: 'emotional-labour', name: 'Emotionellt arbete', desc: 'Hantering av andras känslor: hemma, på jobbet, i vänskapen. Mjukning, anticipering, tröst, medling. Osynligt efter design.', base: 0, enabled: true, invisible: true },
       { id: 'domestic-gap', name: 'Hemarbetsgapet', desc: 'I genomsnitt gör svenska kvinnor fortfarande flera timmar mer husarbete per vecka än sina manliga partners, även när båda arbetar heltid.', cite: 'SCB tidsanvändningsundersökning', base: 0, enabled: true, invisible: true },
     ]
   }
@@ -963,8 +963,8 @@ function handleSignup(e) {
   const email = form.querySelector('input[type="email"]').value;
   form.innerHTML = `
     <div style="text-align:center; padding:8px 0;">
-      <div style="font-family:'Fraunces',serif; font-style:italic; font-size:18px; color:var(--rose-deep);">Tack.</div>
-      <div style="font-family:'Fraunces',serif; font-size:14px; color:var(--sage); margin-top:6px;">
+      <div style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:18px; color:var(--rose-deep);">Tack.</div>
+      <div style="font-family:'Cormorant Garamond',serif; font-size:14px; color:var(--sage); margin-top:6px;">
         Vi hörs från dig när katalogen lanseras. Tills dess: ta hand om dig själv.
       </div>
     </div>
