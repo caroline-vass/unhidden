@@ -485,6 +485,113 @@
     opacity: 0.8;
   }
 
+  /* ===== ACTION PLAN ===== */
+  .action-plan {
+    background: var(--rose-deep);
+    color: var(--paper);
+    padding: 48px;
+    margin: 64px -48px;
+    position: relative;
+  }
+  .action-plan .label { color: var(--rose-soft); margin-bottom: 12px; }
+  .action-plan h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-style: italic;
+    font-size: clamp(28px, 3.6vw, 40px);
+    line-height: 1.15;
+    margin-bottom: 20px;
+    color: var(--paper);
+  }
+  .plan-item {
+    background: rgba(245, 237, 224, 0.08);
+    border-left: 3px solid var(--gold);
+    border-radius: 4px;
+    padding: 16px 20px;
+    margin-top: 14px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .plan-item .plan-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 26px;
+    color: var(--gold);
+    flex-shrink: 0;
+    line-height: 1;
+    min-width: 28px;
+  }
+  .plan-item .plan-body { flex: 1; }
+  .plan-item .plan-name {
+    font-weight: 500;
+    font-size: 14px;
+    margin-bottom: 4px;
+  }
+  .plan-item .plan-effort {
+    display: inline-block;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+  .plan-item .plan-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--paper-warm);
+  }
+  .plan-empty {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--paper-warm);
+    margin-top: 14px;
+    opacity: 0.8;
+  }
+  #collective-plan-list { margin-top: 28px; }
+  #collective-plan-list .plan-section-label {
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--rose-soft);
+    margin-bottom: 6px;
+  }
+  .plan-tools {
+    display: flex;
+    gap: 14px;
+    margin-top: 32px;
+    flex-wrap: wrap;
+  }
+  .plan-btn {
+    background: var(--gold);
+    color: var(--ink);
+    border: none;
+    padding: 12px 22px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .plan-btn-ghost {
+    background: transparent;
+    color: var(--paper);
+    border: 1px solid rgba(245,237,224,0.4);
+  }
+  @media (max-width: 640px) {
+    .action-plan { padding: 32px 24px; margin: 48px -24px; }
+  }
+  @media print {
+    .masthead, .hero, .sticky-bar, .controls, #sections, .signup, footer, .plan-tools { display: none !important; }
+    .summary, .action-plan { background: white !important; color: black !important; margin: 0 0 24px 0 !important; }
+    .summary h2, .action-plan h2 { color: black !important; }
+    .plan-item { background: #f2f2f2 !important; border-left-color: #999 !important; }
+    .plan-text, .summary-card .sc-note { color: #333 !important; }
+  }
+
   /* ===== EMAIL CAPTURE ===== */
   .signup {
     background: var(--paper-warm);
@@ -689,6 +796,21 @@
     <div class="summary-grid" id="summary-grid"></div>
   </div>
 
+  <!-- ===== ACTION PLAN ===== -->
+  <div class="action-plan" id="action-plan-wrap">
+    <div class="label mono">Din handlingsplan</div>
+    <h2>Vad du faktiskt kan göra, i rimlig ordning.</h2>
+    <p style="font-family:'Cormorant Garamond',serif; font-size:17px; line-height:1.6; max-width:680px; color:var(--paper-warm); font-style:italic;">
+      Baserat på vad du bockat i. Sorterat efter hur lätt det är att börja, inte hur viktigt det är.
+    </p>
+    <div id="action-plan-list"></div>
+    <div id="collective-plan-list"></div>
+    <div class="plan-tools">
+      <button type="button" id="btn-email-plan" class="plan-btn">Skicka till dig själv →</button>
+      <button type="button" id="btn-print-plan" class="plan-btn plan-btn-ghost">Skriv ut →</button>
+    </div>
+  </div>
+
   <!-- ===== EMAIL SIGNUP ===== -->
   <div class="signup">
     <h3>Bli meddelad när katalogen lanseras.</h3>
@@ -740,7 +862,7 @@ const sections = [
       { id: 'pay-gap', name: 'Livstidslönegap', desc: 'Det ojusterade lönegapet i Sverige ligger på omkring 9,9%. Det justerade gapet (kontrollerat för yrke och sektor) ligger på omkring 4,7%. Den här räknaren använder den justerade siffran som en konservativ uppskattning.', range: 'Detta snitt döljer stor variation. Nyanlända kvinnor (0–9 år i Sverige) hade det största uppmätta inkomstgapet av någon grupp, 26,8%, medan utrikes födda kvinnor som helhet faktiskt hade ett mindre gap mot utrikes födda män än inrikes födda kvinnor hade mot inrikes födda män. Gapet är också störst bland privatanställda tjänstemän och lägst bland kommunanställda.', cite: 'Medlingsinstitutet, Löneskillnader mellan kvinnor och män (2024); Medlingsinstitutet, Inkomstskillnaden mellan kvinnor och män (2023)', dynamic: 'payGap', enabled: true },
       { id: 'glue-work', name: 'Osynligt "lim-arbete"', desc: 'Anteckningar, mentorskap, organisering av avtackning, konfliktlösning. Oproportionerligt utförda av kvinnor. Sällan befordrad, ofta förväntad.', cite: 'Tara Mohr / Harvard Business Review forskning om genuskodat arbete', base: 0, enabled: true, invisible: true },
       { id: 'negotiation-penalty', name: 'Straffet för lönekrav', desc: 'Kvinnor som förhandlar självsäkert är 30 % mer benägna att uppfattas negativt än män som gör detsamma. Under en karriär undertrycker detta startlöner och höjningar.', cite: 'Bowles, Babcock & Lai (2007); replikerat flera gånger sedan', base: 180000, enabled: true },
-      { id: 'caregiver-bias', name: 'Lönesmälta för vårdare', desc: 'Lönekurvor där vårdarroll är känd för arbetsgivaren resulterar ofta i lägre erbjudanden och långsammare höjningar. Skyddet ligger inte i Diskrimineringslagen. Vårdnadsansvar är inte en av de sju skyddsgrunderna där. Det verkliga skyddet är missgynnandeförbudet i Föräldraledighetslagen: arbetsgivaren får inte missgynna en anställd av skäl som har samband med föräldraledighet (inkl. VAB) i lön, befordran eller villkor. Bevisbördan är omvänd.', action: 'Spara lönebesked, erbjudanden och annat som visar mönstret. Kontakta facket i första hand, de kan driva ärendet åt dig. Du kan också anmäla kostnadsfritt till Diskrimineringsombudsmannen (DO). Eftersom bevisbördan är omvänd är det arbetsgivaren, inte du, som måste visa att skälet inte var föräldraledigheten.', cite: 'Correll, Benard & Paik (2007), moderskapsstraff-forskning; Föräldraledighetslagen (1995:584) 16, 22–25 §§ (missgynnandeförbud); ej Diskrimineringslagen, se DiskrL 1 kap. 5 §', base: 240000, enabled: false },
+      { id: 'caregiver-bias', name: 'Lönesmälta för vårdare', desc: 'Lönekurvor där vårdarroll är känd för arbetsgivaren resulterar ofta i lägre erbjudanden och långsammare höjningar. Skyddet ligger inte i Diskrimineringslagen. Vårdnadsansvar är inte en av de sju skyddsgrunderna där. Det verkliga skyddet är missgynnandeförbudet i Föräldraledighetslagen: arbetsgivaren får inte missgynna en anställd av skäl som har samband med föräldraledighet (inkl. VAB) i lön, befordran eller villkor. Bevisbördan är omvänd.', action: 'Spara lönebesked, erbjudanden och annat som visar mönstret. Kontakta facket i första hand, de kan driva ärendet åt dig. Du kan också anmäla kostnadsfritt till Diskrimineringsombudsmannen (DO). Eftersom bevisbördan är omvänd är det arbetsgivaren, inte du, som måste visa att skälet inte var föräldraledigheten.', effort: 3, cite: 'Correll, Benard & Paik (2007), moderskapsstraff-forskning; Föräldraledighetslagen (1995:584) 16, 22–25 §§ (missgynnandeförbud); ej Diskrimineringslagen, se DiskrL 1 kap. 5 §', base: 240000, enabled: false },
       { id: 'intersectional-discrimination', name: 'Diskrimineringen slutar inte vid kön', desc: 'Diskrimineringslagen skyddar mot diskriminering på sju grunder: kön, könsöverskridande identitet, etnisk tillhörighet, religion, funktionsnedsättning, sexuell läggning och ålder. De kan förstärka varandra. En kvinna med funktionsnedsättning eller utländsk bakgrund möter ofta inte bara ett hinder utan flera samtidigt, och den här räknarens riksgenomsnitt fångar inte hur mycket större gapet blir då.', cite: 'Diskrimineringslagen (2008:567) 1 kap. 5 §; Jämställdhetsmyndigheten, Ekonomisk jämställdhet för kvinnor med funktionsnedsättning (2019)', base: 0, enabled: true, invisible: true },
     ]
   },
@@ -752,8 +874,8 @@ const sections = [
       { id: 'parental-leave', name: 'Föräldraledighetens inkomstgap', desc: 'Föräldrapenning är begränsad till ~80 % av inkomst upp till ett tak, därefter sjunker det kraftigt. Kvinnor tar 70 % av alla ledighetsdagar, absorberande inkomstgapet och karriärpausen.', cite: 'Försäkringskassan, jämställdhetsstatistik; Socialförsäkringsbalken Kap. 11–12', dynamic: 'parentalLeaveGap', enabled: true },
       { id: 'vab', name: 'VAB-asymmetri', desc: 'Vård av sjukt barn (tillfällig föräldraspänn) betalas på ~80 % av inkomst men med karensavdrag. Kvinnor tar ~60 % av alla VAB-dagar. Under 18 år per barn adderas det upp.', cite: 'Försäkringskassan; Socialförsäkringsbalken Kap. 13', dynamic: 'vabCost', enabled: true },
       { id: 'school-admin', name: 'Skol- och omsorgsadministration', desc: 'Hämtning, avlämning, föräldramöten, planering, läkarbesök, sjuka-barn-dagar i skolan. Ofta beskriven som "den andra skiftet". Nästan helt obetald.', base: 0, enabled: true, invisible: true },
-      { id: 'enforcement-tax', name: 'Tillämpningsgapet', desc: 'När en medförälder inte delar omsorgen faller bördan på henne. Underhållsbidrag är minimum 1 873 kr/månad (Försäkringskassan). Konsumentverkets uppskattade verklig kostnad att fostra ett tonårsbarn är 5 000–6 000 kr/månad, exklusive bostäder. Skillnaden betalar hon. Det finns i dag ingen enkel, offentlig källa att kontrollera om en arbetsgivare faktiskt gör sin lönekartläggning, eller om en tidigare partner faktiskt betalar. Det är precis den typen av uppslag en katalog över verifierade, ansvarstagande arbetsgivare är till för. Anmäl dig nedan för att få veta när den finns.', cite: 'Försäkringskassan underhållsstöd; Konsumentverket beräknade barnkostnader; Föräldrabalken Kap. 7', dynamic: 'enforcementGap', enabled: false },
-      { id: 'special-needs', name: 'Särskilt behov-premien', desc: 'När ett barn har särskilt behov, till exempel autism, ADHD, ångest eller funktionsnedsättning, växer omsorgsbördan. Ofta bär en förälder den nästan helt. Omvårdnadsbidrag finns (Socialförsäkringsbalken Kap. 22) men kompenserar inte för förlorad inkomst eller karriärpåverkan.', action: 'Be läkaren skicka läkarutlåtandet direkt till Försäkringskassan. Ansök sedan via deras e-tjänst med BankID, den andra föräldern kan medansöka inom 14 dagar. Handläggningen tar cirka 4 månader, men ersättningen betalas retroaktivt, så inga pengar går förlorade under väntetiden. Beslutet ger också rätt att gå ner 25% i arbetstid.', cite: 'Socialstyrelsen; Socialförsäkringsbalken Kap. 22 (omvårdnadsbidrag)', base: 480000, enabled: false },
+      { id: 'enforcement-tax', name: 'Tillämpningsgapet', desc: 'När en medförälder inte delar omsorgen faller bördan på henne. Underhållsbidrag är minimum 1 873 kr/månad (Försäkringskassan). Konsumentverkets uppskattade verklig kostnad att fostra ett tonårsbarn är 5 000–6 000 kr/månad, exklusive bostäder. Skillnaden betalar hon. Det finns i dag ingen enkel, offentlig källa att kontrollera om en arbetsgivare faktiskt gör sin lönekartläggning, eller om en tidigare partner faktiskt betalar. Det är precis den typen av uppslag en katalog över verifierade, ansvarstagande arbetsgivare är till för. Anmäl dig nedan för att få veta när den finns.', collectiveAction: 'Fråga ditt skyddsombud eller facket rakt av: "Har vi gjort årets lönekartläggning, och kan jag se sammanfattningen?" Lönekartläggning är obligatorisk för arbetsgivare med fler än tio anställda. En fråga väger inte så tungt. Om flera kollegor frågar samma sak samma vecka gör det.', cite: 'Försäkringskassan underhållsstöd; Konsumentverket beräknade barnkostnader; Föräldrabalken Kap. 7', dynamic: 'enforcementGap', enabled: false },
+      { id: 'special-needs', name: 'Särskilt behov-premien', desc: 'När ett barn har särskilt behov, till exempel autism, ADHD, ångest eller funktionsnedsättning, växer omsorgsbördan. Ofta bär en förälder den nästan helt. Omvårdnadsbidrag finns (Socialförsäkringsbalken Kap. 22) men kompenserar inte för förlorad inkomst eller karriärpåverkan.', action: 'Be läkaren skicka läkarutlåtandet direkt till Försäkringskassan. Ansök sedan via deras e-tjänst med BankID, den andra föräldern kan medansöka inom 14 dagar. Handläggningen tar cirka 4 månader, men ersättningen betalas retroaktivt, så inga pengar går förlorade under väntetiden. Beslutet ger också rätt att gå ner 25% i arbetstid.', effort: 2, cite: 'Socialstyrelsen; Socialförsäkringsbalken Kap. 22 (omvårdnadsbidrag)', base: 480000, enabled: false },
     ]
   },
   {
@@ -944,6 +1066,96 @@ function buildSummary() {
   `).join('');
 }
 
+// ===== ACTION PLAN =====
+const ALWAYS_ON_ACTION = {
+  name: 'Bidra med dina siffror, anonymt',
+  effort: 1,
+  effortLabel: '5 minuter, ingen risk',
+  text: 'Lägg till din lön, roll och region i den delade, anonyma statistiken. Ingen kan spåra det till dig. Varje bidrag gör nästa kvinnas jämförelse mer träffsäker.'
+};
+
+const EFFORT_LABELS = { 1: '5 minuter, ingen risk', 2: 'en process, inte konfronterande', 3: 'kräver att du tar strid' };
+
+function getPersonalActions() {
+  const actions = [];
+  sections.forEach(s => s.items.forEach(item => {
+    if (enabled[item.id] && item.action) {
+      actions.push({ name: item.name, effort: item.effort || 2, text: item.action });
+    }
+  }));
+  actions.sort((a, b) => a.effort - b.effort);
+  return [ALWAYS_ON_ACTION, ...actions];
+}
+
+function getCollectiveActions() {
+  const actions = [];
+  sections.forEach(s => s.items.forEach(item => {
+    if (enabled[item.id] && item.collectiveAction) {
+      actions.push({ name: item.name, text: item.collectiveAction });
+    }
+  }));
+  return actions;
+}
+
+function buildActionPlan() {
+  const personal = getPersonalActions();
+  const collective = getCollectiveActions();
+
+  document.getElementById('action-plan-list').innerHTML = personal.map((a, idx) => `
+    <div class="plan-item">
+      <div class="plan-num">${idx + 1}</div>
+      <div class="plan-body">
+        <div class="plan-name">${a.name}</div>
+        <div class="plan-effort mono">${a.effortLabel || EFFORT_LABELS[a.effort]}</div>
+        <div class="plan-text">${a.text}</div>
+      </div>
+    </div>
+  `).join('');
+
+  const collectiveWrap = document.getElementById('collective-plan-list');
+  if (collective.length === 0) {
+    collectiveWrap.innerHTML = '';
+  } else {
+    collectiveWrap.innerHTML = `
+      <div class="plan-section-label mono">Att göra tillsammans, inte ensam</div>
+      ${collective.map(a => `
+        <div class="plan-item">
+          <div class="plan-num">✦</div>
+          <div class="plan-body">
+            <div class="plan-name">${a.name}</div>
+            <div class="plan-text">${a.text}</div>
+          </div>
+        </div>
+      `).join('')}
+    `;
+  }
+}
+
+function buildPlanEmailBody() {
+  const total = fmt(grandTotal());
+  const personal = getPersonalActions();
+  const collective = getCollectiveActions();
+  let body = `Min beräknade livstidskostnad enligt Eqly Index: ${total}\n\n`;
+  body += `MIN HANDLINGSPLAN:\n`;
+  personal.forEach((a, idx) => { body += `\n${idx + 1}. ${a.name}\n${a.text}\n`; });
+  if (collective.length) {
+    body += `\nATT GÖRA TILLSAMMANS:\n`;
+    collective.forEach(a => { body += `\n• ${a.name}\n${a.text}\n`; });
+  }
+  body += `\n\nBeräknat på eqly.eu. Ingenting av detta lagrades eller skickades förrän du valde att maila det till dig själv.`;
+  return body;
+}
+
+document.getElementById('btn-email-plan').addEventListener('click', () => {
+  const subject = encodeURIComponent('Min handlingsplan från Eqly Index');
+  const body = encodeURIComponent(buildPlanEmailBody());
+  window.location.href = `mailto:?subject=${subject}&body=${body}`;
+});
+
+document.getElementById('btn-print-plan').addEventListener('click', () => {
+  window.print();
+});
+
 function update() {
   document.getElementById('grand-total').textContent = fmt(grandTotal());
 
@@ -964,6 +1176,7 @@ function update() {
   });
 
   buildSummary();
+  buildActionPlan();
 }
 
 // ===== INPUT WIRING =====
